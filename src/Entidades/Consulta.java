@@ -18,4 +18,5 @@ public class Consulta {
 
 	private String observacao;
 
+	
 }
