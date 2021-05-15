@@ -1,9 +1,10 @@
 package Entidades;
 
+import Entidades.Enum.TipoConsulta;
+
 import java.util.Date;
 
 import Entidades.Enum.StatusConsulta;
-import Entidades.Enum.TipoConsulta;
 
 public class Consulta {
 

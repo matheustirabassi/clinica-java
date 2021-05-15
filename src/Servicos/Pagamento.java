@@ -1,11 +1,7 @@
 package Servicos;
 
-import Entidades.Paciente;
-
 public interface Pagamento {
 
-	
-
-	
+	public abstract void pagar();
 
 }

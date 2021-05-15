@@ -1,9 +1,17 @@
 package Servicos;
 
-import Entidades.Gerente;
+import java.util.Date;
 
-public interface AgendarConsulta {
+import Entidades.Medico;
 
-	
+public class AgendarConsulta {
+
+	public Medico pesquisarMedico() {
+		return null;
+	}
+
+	public Integer verificarDisponibilidade(Date dataConsulta) {
+		return null;
+	}
 
 }

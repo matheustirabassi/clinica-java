@@ -18,4 +18,8 @@ public class Paciente {
 
 	private String email;
 
+	public void cadastrarPaciente() {
+
+	}
+
 }

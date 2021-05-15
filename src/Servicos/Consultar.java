@@ -1,9 +1,13 @@
 package Servicos;
 
-import Entidades.Medico;
+public class Consultar {
 
-public interface Consultar {
+	public void receituarioMedico() {
 
-	
+	}
+
+	public void encaminhamentoEspecialidade() {
+
+	}
 
 }
