@@ -1,4 +1,4 @@
-package entidades;
+package model.entities;
 
 import java.util.ArrayList;
 import java.util.Date;

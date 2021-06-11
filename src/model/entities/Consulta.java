@@ -1,9 +1,9 @@
-package entidades;
+package model.entities;
 
 import java.util.Date;
 
-import entidades.Enum.StatusConsulta;
-import entidades.Enum.TipoConsulta;
+import model.entities.Enum.StatusConsulta;
+import model.entities.Enum.TipoConsulta;
 
 public class Consulta {
 

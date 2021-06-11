@@ -1,4 +1,4 @@
-package entidades.Enum;
+package model.entities.Enum;
 
 public enum FormaPagamento {
 

@@ -3,8 +3,8 @@ package application;
 import java.sql.Connection;
 
 import db.DB;
-import entidades.Clinica;
-import entidades.Endereco;
+import model.entities.Clinica;
+import model.entities.Endereco;
 
 public class Main {
 

@@ -1,6 +1,6 @@
-package entidades;
+package model.entities;
 
-import entidades.Enum.FormaPagamento;
+import model.entities.Enum.FormaPagamento;
 
 public class Convencional implements Pagamento {
 

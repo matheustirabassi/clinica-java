@@ -1,28 +1,26 @@
-package entidades;
+package model.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
-public class Medico {
+public class Gerente {
 
 	private Integer id;
 	private String nome;
 	private String cpf;
 	private String telefone;
+	private Date dataNascimento;
 	private String email;
-	private List<Consulta> consultas = new ArrayList<>();
-	private Especialidade especialidade;
 	private Clinica clinica;
 	private Endereco endereco;
 
-	public Medico(Integer id, String nome, String cpf, String telefone, String email, Especialidade especialidade,
+	public Gerente(Integer id, String nome, String cpf, String telefone, Date dataNascimento, String email,
 			Clinica clinica, Endereco endereco) {
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.telefone = telefone;
+		this.dataNascimento = dataNascimento;
 		this.email = email;
-		this.especialidade = especialidade;
 		this.clinica = clinica;
 		this.endereco = endereco;
 	}
@@ -59,28 +57,20 @@ public class Medico {
 		this.telefone = telefone;
 	}
 
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public List<Consulta> getConsultas() {
-		return consultas;
-	}
-
-	public void setConsultas(List<Consulta> consultas) {
-		this.consultas = consultas;
-	}
-
-	public Especialidade getEspecialidade() {
-		return especialidade;
-	}
-
-	public void setEspecialidade(Especialidade especialidade) {
-		this.especialidade = especialidade;
 	}
 
 	public Clinica getClinica() {
