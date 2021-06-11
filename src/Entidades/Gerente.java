@@ -7,22 +7,30 @@ public class Gerente {
 	private Integer id;
 	private String nome;
 	private String cpf;
-	private String endereco;
 	private String telefone;
 	private Date dataNascimento;
 	private String email;
 	private Clinica clinica;
+	private Endereco endereco;
 
-	public Gerente(Integer id, String nome, String cpf, String endereco, String telefone, Date dataNascimento,
-			String email, Clinica clinica) {
+	public Gerente(Integer id, String nome, String cpf, String telefone, Date dataNascimento, String email,
+			Clinica clinica, Endereco endereco) {
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
-		this.endereco = endereco;
 		this.telefone = telefone;
 		this.dataNascimento = dataNascimento;
 		this.email = email;
 		this.clinica = clinica;
+		this.endereco = endereco;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -33,12 +41,12 @@ public class Gerente {
 		this.nome = nome;
 	}
 
-	public String getEndereco() {
-		return endereco;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public String getTelefone() {
@@ -73,37 +81,12 @@ public class Gerente {
 		this.clinica = clinica;
 	}
 
-	public Integer getId() {
-		return id;
+	public Endereco getEndereco() {
+		return endereco;
 	}
 
-	public String getCpf() {
-		return cpf;
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Gerente [id=");
-		builder.append(id);
-		builder.append(", nome=");
-		builder.append(nome);
-		builder.append(", cpf=");
-		builder.append(cpf);
-		builder.append(", endereco=");
-		builder.append(endereco);
-		builder.append(", telefone=");
-		builder.append(telefone);
-		builder.append(", dataNascimento=");
-		builder.append(dataNascimento);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", clinica=");
-		builder.append(clinica);
-		builder.append("]");
-		return builder.toString();
-	}
-
-	
-	
 }

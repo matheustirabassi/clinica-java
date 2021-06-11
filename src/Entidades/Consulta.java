@@ -119,6 +119,4 @@ public class Consulta {
 		return builder.toString();
 	}
 
-	
-	
 }

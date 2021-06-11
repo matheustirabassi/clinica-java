@@ -43,6 +43,4 @@ public class Convencional implements Pagamento {
 		return builder.toString();
 	}
 
-	
-	
 }

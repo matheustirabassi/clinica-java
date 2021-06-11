@@ -3,6 +3,8 @@ package application;
 import java.sql.Connection;
 
 import db.DB;
+import entidades.Clinica;
+import entidades.Endereco;
 
 public class Main {
 

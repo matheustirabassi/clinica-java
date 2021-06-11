@@ -1,30 +1,38 @@
 package entidades;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Medico {
 
 	private Integer id;
 	private String nome;
 	private String cpf;
-	private String endereco;
 	private String telefone;
 	private String email;
-	private Collection<Consulta> consultas;
+	private List<Consulta> consultas = new ArrayList<>();
 	private Especialidade especialidade;
 	private Clinica clinica;
+	private Endereco endereco;
 
-	public Medico(Integer id, String nome, String cpf, String endereco, String telefone, String email,
-			Collection<Consulta> consultas, Especialidade especialidade, Clinica clinica) {
+	public Medico(Integer id, String nome, String cpf, String telefone, String email, Especialidade especialidade,
+			Clinica clinica, Endereco endereco) {
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
-		this.endereco = endereco;
 		this.telefone = telefone;
 		this.email = email;
-		this.consultas = consultas;
 		this.especialidade = especialidade;
 		this.clinica = clinica;
+		this.endereco = endereco;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -35,12 +43,12 @@ public class Medico {
 		this.nome = nome;
 	}
 
-	public String getEndereco() {
-		return endereco;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public String getTelefone() {
@@ -59,19 +67,19 @@ public class Medico {
 		this.email = email;
 	}
 
-	public Collection<Consulta> getConsultas() {
+	public List<Consulta> getConsultas() {
 		return consultas;
 	}
 
-	public void setConsultas(Collection<Consulta> consultas) {
+	public void setConsultas(List<Consulta> consultas) {
 		this.consultas = consultas;
 	}
 
-	public Especialidade getEspecialidades() {
+	public Especialidade getEspecialidade() {
 		return especialidade;
 	}
 
-	public void setEspecialidades(Especialidade especialidade) {
+	public void setEspecialidade(Especialidade especialidade) {
 		this.especialidade = especialidade;
 	}
 
@@ -83,48 +91,12 @@ public class Medico {
 		this.clinica = clinica;
 	}
 
-	public Integer getId() {
-		return id;
+	public Endereco getEndereco() {
+		return endereco;
 	}
 
-	public String getCpf() {
-		return cpf;
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
-	public void receituarioMedico() {
-
-	}
-
-	public void encaminhamentoEspecialidade() {
-
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Medico [id=");
-		builder.append(id);
-		builder.append(", nome=");
-		builder.append(nome);
-		builder.append(", cpf=");
-		builder.append(cpf);
-		builder.append(", endereco=");
-		builder.append(endereco);
-		builder.append(", telefone=");
-		builder.append(telefone);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", consultas=");
-		builder.append(consultas);
-		builder.append(", especialidade=");
-		builder.append(especialidade);
-		builder.append(", clinica=");
-		builder.append(clinica);
-		builder.append("]");
-		return builder.toString();
-	}
-
-	
-	
-	
 }
