@@ -1,11 +1,9 @@
-package Entidades.Enum;
+package entidades.Enum;
 
 public enum StatusConsulta {
 
-	;
+	AGENDADO,
+	FINALIZADO;
 
-	private int AGENDADO = 0;
-
-	private int FINALIZADO = 1;
 
 }
