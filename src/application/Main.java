@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import db.DB;
+import model.dao.DaoFactory;
+import model.dao.PacienteDao;
 import model.entities.Endereco;
 import model.entities.Paciente;
 
@@ -18,6 +20,9 @@ public class Main {
 			Endereco end = new Endereco("R Humberto de campos", 118, 18520000, "sp", 
 					"Cerquilho", "Jardim Esplanada","Casa");
 			obj.setEndereco(end);
+			
+			PacienteDao pacienteDao = DaoFactory.createPacienteDao();
+			
 			System.out.println(obj);
 		} catch (ParseException e) {
 			e.getLocalizedMessage();
