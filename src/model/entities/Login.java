@@ -1,14 +1,19 @@
 package model.entities;
 
-public class Login {
+import java.io.Serializable;
+
+public class Login implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	private Integer id;
 	private String usuario;
 	private String senha;
 	private Paciente paciente;
-	
+
 	public Login() {
 	}
-	
+
 	public Login(Integer id, String usuario, String senha, Paciente paciente) {
 		this.id = id;
 		this.usuario = usuario;
@@ -72,7 +77,20 @@ public class Login {
 			return false;
 		return true;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Login [id=");
+		builder.append(id);
+		builder.append(", usuario=");
+		builder.append(usuario);
+		builder.append(", senha=");
+		builder.append(senha);
+		builder.append(", paciente=");
+		builder.append(paciente);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

@@ -1,7 +1,12 @@
 package model.entities;
 
-public class Endereco {
+import java.io.Serializable;
 
+public class Endereco implements Serializable{
+
+	
+	private static final long serialVersionUID = 1L;
+	
 	private Integer id;
 	private String logradouro;
 	private Integer numero;
@@ -10,11 +15,7 @@ public class Endereco {
 	private String cidade;
 	private String bairro;
 	private String complemento;
-	private Paciente paciente;
-	private Gerente gerente;
-	private Medico medico;
-	private Clinica clinica;
-
+	
 	public Endereco() {
 	}
 
@@ -85,38 +86,6 @@ public class Endereco {
 		this.complemento = complemento;
 	}
 
-	public Paciente getPaciente() {
-		return paciente;
-	}
-
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
-	}
-
-	public Gerente getGerente() {
-		return gerente;
-	}
-
-	public void setGerente(Gerente gerente) {
-		this.gerente = gerente;
-	}
-
-	public Medico getMedico() {
-		return medico;
-	}
-
-	public void setMedico(Medico medico) {
-		this.medico = medico;
-	}
-
-	public Clinica getClinica() {
-		return clinica;
-	}
-
-	public void setClinica(Clinica clinica) {
-		this.clinica = clinica;
-	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -125,4 +94,52 @@ public class Endereco {
 		this.id = id;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Endereco other = (Endereco) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Endereco [id=");
+		builder.append(id);
+		builder.append(", logradouro=");
+		builder.append(logradouro);
+		builder.append(", numero=");
+		builder.append(numero);
+		builder.append(", cep=");
+		builder.append(cep);
+		builder.append(", estado=");
+		builder.append(estado);
+		builder.append(", cidade=");
+		builder.append(cidade);
+		builder.append(", bairro=");
+		builder.append(bairro);
+		builder.append(", complemento=");
+		builder.append(complemento);
+		builder.append("]");
+		return builder.toString();
+	}
+	
 }

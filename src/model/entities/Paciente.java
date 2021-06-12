@@ -136,8 +136,14 @@ public class Paciente implements Serializable {
 		builder.append(dataNascimento);
 		builder.append(", email=");
 		builder.append(email);
+		builder.append(", endereco=");
+		builder.append(endereco);
+		builder.append(", consultas=");
+		builder.append(consultas);
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 	
 }
