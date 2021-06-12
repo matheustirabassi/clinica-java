@@ -5,6 +5,9 @@ public class Convenio implements Pagamento {
 	private String plano;
 	private Double tarifa;
 
+	public Convenio() {
+	}
+
 	public Convenio(String plano, Double tarifa) {
 		this.plano = plano;
 		this.tarifa = tarifa;

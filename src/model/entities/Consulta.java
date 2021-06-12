@@ -16,6 +16,9 @@ public class Consulta {
 	private StatusConsulta statusConsulta;
 	private Pagamento pagamento;
 
+	public Consulta() {
+	}
+
 	public Consulta(Integer id, Date dataMarcada, String observacao, Medico medico, Paciente paciente,
 			TipoConsulta tipoConsulta, StatusConsulta statusConsulta, Pagamento pagamento) {
 		this.id = id;

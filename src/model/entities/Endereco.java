@@ -2,6 +2,7 @@ package model.entities;
 
 public class Endereco {
 
+	private Integer id;
 	private String logradouro;
 	private Integer numero;
 	private Integer cep;
@@ -13,6 +14,9 @@ public class Endereco {
 	private Gerente gerente;
 	private Medico medico;
 	private Clinica clinica;
+
+	public Endereco() {
+	}
 
 	public Endereco(String logradouro, Integer numero, Integer cep, String estado, String cidade, String bairro,
 			String complemento) {
@@ -111,6 +115,14 @@ public class Endereco {
 
 	public void setClinica(Clinica clinica) {
 		this.clinica = clinica;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }

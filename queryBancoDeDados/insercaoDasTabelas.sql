@@ -5,8 +5,8 @@ use clinica2;
 create table paciente(
 id int primary key not null auto_increment,
 nome varchar(30),
-cpf numeric(11),
-telefone numeric(13),
+cpf varchar(11),
+telefone varchar(13),
 email varchar(35),
 dataNascimento date
 );
@@ -19,8 +19,8 @@ descricao varchar(30)
 create table medico(
 id int primary key not null auto_increment,
 nome varchar(30),
-cpf numeric(11),
-telefone numeric(13),
+cpf varchar(11),
+telefone varchar(13),
 email varchar(35),
 dataNascimento date
 );
@@ -35,15 +35,15 @@ foreign key(idMedico) references medico(id)
 create table gerente(
 id int primary key not null auto_increment,
 nome varchar(30),
-cpf numeric(11),
-telefone numeric(13),
+cpf varchar(11),
+telefone varchar(13),
 email varchar(35),
 dataNascimento date
 );
 create table clinica(
-id int primary key,
+id int primary key not null auto_increment,
 nome varchar(30),
-cpnj numeric(14)
+cpnj varchar(14)
 );
 create table consulta(
 id int primary key not null auto_increment,
@@ -55,6 +55,7 @@ constraint fk_consultaMedico foreign key(idMedico) references medico(id),
 constraint fk_consultaPaciente foreign key(idPaciente) references paciente(id)
 );
 create table endereco(
+id int primary key not null auto_increment,
 logradouro varchar(30),
 numero numeric,
 bairro varchar(30),
@@ -74,7 +75,7 @@ constraint fk_enderecoClinica foreign key(idClinica) references clinica(id)
 create table pagamento(
 id int primary key not null auto_increment,
 valor double,
-formaPagamento numeric,
+formaPagamento int,
 idConsulta int,
 constraint fk_pagamentoConvencionalespecialidade_medico foreign key(idConsulta) references consulta(id)
 );
@@ -86,7 +87,8 @@ idConsulta int,
 constraint fk_pagamentoConvenio foreign key(idConsulta) references consulta(id)
 );
 create table login(
-usuario varchar(30),
+id int primary key not null auto_increment,
+usuario varchar(30) unique key,
 senha varchar(30),
 idPaciente int,
 constraint fk_loginPaciente foreign key(idPaciente) references paciente(id)

@@ -13,6 +13,9 @@ public class Gerente {
 	private Clinica clinica;
 	private Endereco endereco;
 
+	public Gerente() {
+	}
+
 	public Gerente(Integer id, String nome, String cpf, String telefone, Date dataNascimento, String email,
 			Clinica clinica, Endereco endereco) {
 		this.id = id;

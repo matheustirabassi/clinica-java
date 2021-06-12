@@ -12,6 +12,9 @@ public class Clinica {
 	private List<Gerente> gerentes = new ArrayList<>();
 	private Endereco endereco;
 
+	public Clinica() {
+	}
+
 	public Clinica(Integer id, String nome, String cnpj, Endereco endereco) {
 		this.id = id;
 		this.nome = nome;

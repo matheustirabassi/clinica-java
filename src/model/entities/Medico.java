@@ -15,6 +15,9 @@ public class Medico {
 	private Clinica clinica;
 	private Endereco endereco;
 
+	public Medico() {
+	}
+
 	public Medico(Integer id, String nome, String cpf, String telefone, String email, Especialidade especialidade,
 			Clinica clinica, Endereco endereco) {
 		this.id = id;

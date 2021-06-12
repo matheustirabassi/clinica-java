@@ -7,6 +7,9 @@ public class Convencional implements Pagamento {
 	private Double valor;
 	private FormaPagamento formaDePagamento;
 
+	public Convencional() {
+	}
+
 	public Convencional(Double valor, FormaPagamento formaDePagamento) {
 		this.valor = valor;
 		this.formaDePagamento = formaDePagamento;
