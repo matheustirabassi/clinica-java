@@ -19,6 +19,7 @@ import model.entities.Paciente;
 import model.entities.Pagamento;
 import model.entities.Enum.FormaPagamento;
 import model.entities.Enum.StatusConsulta;
+import model.entities.Enum.StatusPagamento;
 import model.entities.Enum.TipoConsulta;
 
 public class PacienteDaoJDBC implements PacienteDao {
@@ -46,11 +47,13 @@ public class PacienteDaoJDBC implements PacienteDao {
 		// TODO Auto-generated method stub
 
 	}
+
 	@Override
 	public List<Paciente> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public Paciente findById(Integer id) {
 		String sql = "select paciente.* , endereco.*, consulta.*, pagamento.*, login.* from paciente inner join endereco on endereco.idPaciente = paciente.id inner join consulta on consulta.idPaciente= paciente.id inner join pagamento on pagamento.idConsulta = consulta.id inner join login on login.idPaciente = paciente.id where paciente.id = ?";
@@ -77,18 +80,24 @@ public class PacienteDaoJDBC implements PacienteDao {
 	}
 
 	private Pagamento instantiatePagamento(ResultSet rs) throws SQLException {
+		try {
+			if (rs.getInt("formaPagamento") == 2) {
+				Convencional pagamento = new Convencional();
+				pagamento.setValor(rs.getDouble("valor"));
+				pagamento.setFormaDePagamento(FormaPagamento.values()[rs.getInt("formaPagamento") - 1]);
+				pagamento.setStatusPagamento(StatusPagamento.values()[rs.getInt("statusPagamento") - 1]);
+				return pagamento;
+			}
+			Convenio pagamento = new Convenio();
+			pagamento.setTarifa(rs.getDouble("valor"));
+			pagamento.setPlano(rs.getString("convenio"));
 
-		if (rs.getInt("formaPagamento") == 2) {
-			Convencional pagamento = new Convencional();
-			pagamento.setValor(rs.getDouble("valor"));
-			pagamento.setFormaDePagamento(FormaPagamento.values()[rs.getInt("formaPagamento") - 1]);
 			return pagamento;
-		}
-		Convenio pagamento = new Convenio();
-		pagamento.setTarifa(rs.getDouble("valor"));
-		pagamento.setPlano(rs.getString("convenio"));
-		return pagamento;
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Fora do escopo do enum \n" + e.getMessage());
 
+		}
+		return null;
 	}
 
 	private List<Consulta> instantiateConsultas(ResultSet rs) throws SQLException {
@@ -146,7 +155,5 @@ public class PacienteDaoJDBC implements PacienteDao {
 		end.setComplemento(rs.getString("complemento"));
 		return end;
 	}
-
-	
 
 }
