@@ -88,7 +88,7 @@ public class Consulta {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy HH:mm:ssss");
+		SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		builder.append("\nConsulta [id=");
 		builder.append(id);
 		builder.append(", dataMarcada=");

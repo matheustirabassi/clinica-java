@@ -46,7 +46,11 @@ public class PacienteDaoJDBC implements PacienteDao {
 		// TODO Auto-generated method stub
 
 	}
-
+	@Override
+	public List<Paciente> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	@Override
 	public Paciente findById(Integer id) {
 		String sql = "select paciente.* , endereco.*, consulta.*, pagamento.*, login.* from paciente inner join endereco on endereco.idPaciente = paciente.id inner join consulta on consulta.idPaciente= paciente.id inner join pagamento on pagamento.idConsulta = consulta.id inner join login on login.idPaciente = paciente.id where paciente.id = ?";
@@ -100,7 +104,7 @@ public class PacienteDaoJDBC implements PacienteDao {
 	private Consulta instantiateConsulta(ResultSet rs, Pagamento pagamento) throws SQLException {
 		Consulta cons = new Consulta();
 		cons.setId(rs.getInt("consulta.id"));
-		cons.setDataMarcada(rs.getDate("dataMarcada"));
+		cons.setDataMarcada(rs.getTimestamp("dataMarcada"));
 		cons.setObservacao(rs.getString("observacao"));
 		cons.setStatusConsulta(StatusConsulta.values()[rs.getInt("statusConsulta") - 1]);
 		cons.setTipoConsulta(TipoConsulta.values()[rs.getInt("tipoConsulta") - 1]);
@@ -143,10 +147,6 @@ public class PacienteDaoJDBC implements PacienteDao {
 		return end;
 	}
 
-	@Override
-	public List<Paciente> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }
