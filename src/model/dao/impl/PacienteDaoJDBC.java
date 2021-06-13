@@ -81,23 +81,23 @@ public class PacienteDaoJDBC implements PacienteDao {
 
 	private Pagamento instantiatePagamento(ResultSet rs) throws SQLException {
 		try {
+			Pagamento pagamento = null;
 			if (rs.getInt("formaPagamento") == 2) {
-				Convencional pagamento = new Convencional();
+				pagamento = new Convencional();
 				pagamento.setValor(rs.getDouble("valor"));
-				pagamento.setFormaDePagamento(FormaPagamento.values()[rs.getInt("formaPagamento") - 1]);
-				pagamento.setStatusPagamento(StatusPagamento.values()[rs.getInt("statusPagamento") - 1]);
+				((Convencional) pagamento).setFormaPagamento(FormaPagamento.values()[rs.getInt("formaPagamento") - 1]);
+				((Convencional) pagamento)
+						.setStatusPagamento(StatusPagamento.values()[rs.getInt("statusPagamento") - 1]);
 				return pagamento;
 			}
-			Convenio pagamento = new Convenio();
-			pagamento.setTarifa(rs.getDouble("valor"));
-			pagamento.setPlano(rs.getString("convenio"));
+			pagamento = new Convenio();
+			pagamento.setValor(rs.getDouble("valor"));
+			((Convenio) pagamento).setPlano(rs.getString("convenio"));
 
 			return pagamento;
 		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println("Fora do escopo do enum \n" + e.getMessage());
-
+			return null;
 		}
-		return null;
 	}
 
 	private List<Consulta> instantiateConsultas(ResultSet rs) throws SQLException {

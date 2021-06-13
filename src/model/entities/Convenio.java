@@ -21,11 +21,11 @@ public class Convenio implements Pagamento {
 		this.plano = plano;
 	}
 
-	public Double getTarifa() {
+	public Double getValor() {
 		return tarifa;
 	}
 
-	public void setTarifa(Double tarifa) {
+	public void setValor(Double tarifa) {
 		this.tarifa = tarifa;
 	}
 
@@ -43,5 +43,6 @@ public class Convenio implements Pagamento {
 		builder.append("]");
 		return builder.toString();
 	}
+
 
 }
