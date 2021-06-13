@@ -16,6 +16,7 @@ public class Paciente implements Serializable {
 	private Date dataNascimento;
 	private String email;
 	private Endereco endereco;
+	private Login login;
 	private List<Consulta> consultas = new ArrayList<>();
 
 	public Paciente() {
@@ -96,6 +97,14 @@ public class Paciente implements Serializable {
 		this.consultas = consultas;
 	}
 
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -135,15 +144,17 @@ public class Paciente implements Serializable {
 		builder.append(", dataNascimento=");
 		builder.append(dataNascimento);
 		builder.append(", email=");
-		builder.append(email);
-		builder.append(", endereco=");
-		builder.append(endereco);
-		builder.append(", consultas=");
-		builder.append(consultas);
+		builder.append(email + "\n");
+		builder.append("endereco=");
+		builder.append(endereco + "\n");
+		builder.append("login=");
+		builder.append(login + "\n");
+		builder.append("consultas=");
+		builder.append(consultas + "\n");
 		builder.append("]");
 		return builder.toString();
 	}
 
 	
-	
+
 }

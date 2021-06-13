@@ -1,5 +1,6 @@
 package model.entities;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import model.entities.Enum.StatusConsulta;
@@ -10,8 +11,6 @@ public class Consulta {
 	private Integer id;
 	private Date dataMarcada;
 	private String observacao;
-	private Medico medico;
-	private Paciente paciente;
 	private TipoConsulta tipoConsulta;
 	private StatusConsulta statusConsulta;
 	private Pagamento pagamento;
@@ -19,13 +18,12 @@ public class Consulta {
 	public Consulta() {
 	}
 
-	public Consulta(Integer id, Date dataMarcada, String observacao, Medico medico, Paciente paciente,
-			TipoConsulta tipoConsulta, StatusConsulta statusConsulta, Pagamento pagamento) {
+	public Consulta(Integer id, Date dataMarcada, String observacao, TipoConsulta tipoConsulta,
+			StatusConsulta statusConsulta, Pagamento pagamento) {
 		this.id = id;
 		this.dataMarcada = dataMarcada;
 		this.observacao = observacao;
-		this.medico = medico;
-		this.paciente = paciente;
+
 		this.tipoConsulta = tipoConsulta;
 		this.statusConsulta = statusConsulta;
 		this.pagamento = pagamento;
@@ -45,22 +43,6 @@ public class Consulta {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
-	}
-
-	public Medico getMedico() {
-		return medico;
-	}
-
-	public void setMedico(Medico medico) {
-		this.medico = medico;
-	}
-
-	public Paciente getPaciente() {
-		return paciente;
-	}
-
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
 	}
 
 	public TipoConsulta getTipoConsulta() {
@@ -86,9 +68,13 @@ public class Consulta {
 	public void setPagamento(Pagamento pagamento) {
 		this.pagamento = pagamento;
 	}
-
+	
 	public Integer getId() {
 		return id;
+	}
+	
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Medico pesquisarMedico() {
@@ -102,16 +88,13 @@ public class Consulta {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Consulta [id=");
+		SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy HH:mm:ssss");
+		builder.append("\nConsulta [id=");
 		builder.append(id);
 		builder.append(", dataMarcada=");
-		builder.append(dataMarcada);
+		builder.append(sdf1.format(dataMarcada));
 		builder.append(", observacao=");
 		builder.append(observacao);
-		builder.append(", medico=");
-		builder.append(medico);
-		builder.append(", paciente=");
-		builder.append(paciente);
 		builder.append(", tipoConsulta=");
 		builder.append(tipoConsulta);
 		builder.append(", statusConsulta=");
@@ -121,5 +104,7 @@ public class Consulta {
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 
 }

@@ -87,10 +87,9 @@ public class Login implements Serializable{
 		builder.append(usuario);
 		builder.append(", senha=");
 		builder.append(senha);
-		builder.append(", paciente=");
-		builder.append(paciente);
 		builder.append("]");
 		return builder.toString();
 	}
+
 
 }
