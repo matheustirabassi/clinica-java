@@ -1,6 +1,7 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -132,6 +133,7 @@ public class Paciente implements Serializable {
 
 	@Override
 	public String toString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		StringBuilder builder = new StringBuilder();
 		builder.append("Paciente [id=");
 		builder.append(id);
@@ -142,7 +144,7 @@ public class Paciente implements Serializable {
 		builder.append(", telefone=");
 		builder.append(telefone);
 		builder.append(", dataNascimento=");
-		builder.append(dataNascimento);
+		builder.append(sdf.format(dataNascimento));
 		builder.append(", email=");
 		builder.append(email + "\n");
 		builder.append("endereco=");

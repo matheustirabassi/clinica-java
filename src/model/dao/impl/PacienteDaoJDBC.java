@@ -56,7 +56,11 @@ public class PacienteDaoJDBC implements PacienteDao {
 
 	@Override
 	public Paciente findById(Integer id) {
-		String sql = "select paciente.* , endereco.*, consulta.*, pagamento.*, login.* from paciente inner join endereco on endereco.idPaciente = paciente.id inner join consulta on consulta.idPaciente= paciente.id inner join pagamento on pagamento.idConsulta = consulta.id inner join login on login.idPaciente = paciente.id where paciente.id = ?";
+		String sql = "select paciente.* , endereco.*, consulta.*, pagamento.*,login.* from paciente "
+				+ "left join endereco on paciente.id = endereco.idPaciente "
+				+ "left join consulta on paciente.id = consulta.idPaciente "
+				+ "left join pagamento on paciente.id = pagamento.idConsulta "
+				+ "left join login on paciente.id = login.idPaciente  where paciente.id = ?";
 
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -111,14 +115,18 @@ public class PacienteDaoJDBC implements PacienteDao {
 	}
 
 	private Consulta instantiateConsulta(ResultSet rs, Pagamento pagamento) throws SQLException {
-		Consulta cons = new Consulta();
-		cons.setId(rs.getInt("consulta.id"));
-		cons.setDataMarcada(rs.getTimestamp("dataMarcada"));
-		cons.setObservacao(rs.getString("observacao"));
-		cons.setStatusConsulta(StatusConsulta.values()[rs.getInt("statusConsulta") - 1]);
-		cons.setTipoConsulta(TipoConsulta.values()[rs.getInt("tipoConsulta") - 1]);
-		cons.setPagamento(pagamento);
-		return cons;
+		if(rs.getString("consulta.id") != null) {
+			Consulta cons = new Consulta();
+			cons.setId(rs.getInt("consulta.id"));
+			cons.setDataMarcada(rs.getTimestamp("dataMarcada"));
+			cons.setObservacao(rs.getString("observacao"));
+			cons.setStatusConsulta(StatusConsulta.values()[rs.getInt("statusConsulta") - 1]);
+			cons.setTipoConsulta(TipoConsulta.values()[rs.getInt("tipoConsulta") - 1]);
+			cons.setPagamento(pagamento);
+			return cons;
+		}
+		
+		return null;
 	}
 
 	private Paciente instantiatePaciente(ResultSet rs, Endereco end, Login l, List<Consulta> consultas)

@@ -1,1 +1,6 @@
-select paciente.* , endereco.*, consulta.*, pagamento.*, login.* from paciente inner join endereco on endereco.idPaciente = paciente.id inner join consulta on consulta.idPaciente= paciente.id inner join pagamento on pagamento.idConsulta = consulta.id inner join login on login.idPaciente = paciente.id where paciente.id = 1;
+use  clinica2;
+select paciente.* , endereco.*, consulta.*, pagamento.*,login.* from paciente 
+left join endereco on paciente.id = endereco.idPaciente
+left join consulta on paciente.id = consulta.idPaciente 
+left join pagamento on paciente.id = pagamento.idConsulta
+left join login on paciente.id = login.idPaciente  where paciente.id = 2;
