@@ -68,11 +68,11 @@ public class Consulta {
 	public void setPagamento(Pagamento pagamento) {
 		this.pagamento = pagamento;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -88,7 +88,7 @@ public class Consulta {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		builder.append("\nConsulta [id=");
 		builder.append(id);
 		builder.append(", dataMarcada=");
@@ -104,7 +104,5 @@ public class Consulta {
 		builder.append("]");
 		return builder.toString();
 	}
-
-	
 
 }

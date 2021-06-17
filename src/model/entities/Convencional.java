@@ -51,5 +51,5 @@ public class Convencional implements Pagamento {
 		return "Convencional [valor=" + valor + ", formaPagamento=" + formaPagamento + ", statusPagamento="
 				+ statusPagamento + "]";
 	}
-	
+
 }

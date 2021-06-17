@@ -157,6 +157,4 @@ public class Paciente implements Serializable {
 		return builder.toString();
 	}
 
-	
-
 }

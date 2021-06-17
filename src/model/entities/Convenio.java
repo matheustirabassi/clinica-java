@@ -44,5 +44,4 @@ public class Convenio implements Pagamento {
 		return builder.toString();
 	}
 
-
 }

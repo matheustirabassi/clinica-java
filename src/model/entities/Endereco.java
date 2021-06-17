@@ -2,11 +2,10 @@ package model.entities;
 
 import java.io.Serializable;
 
-public class Endereco implements Serializable{
+public class Endereco implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer id;
 	private String logradouro;
 	private Integer numero;
@@ -15,7 +14,7 @@ public class Endereco implements Serializable{
 	private String cidade;
 	private String bairro;
 	private String complemento;
-	
+
 	public Endereco() {
 	}
 
@@ -141,5 +140,5 @@ public class Endereco implements Serializable{
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }

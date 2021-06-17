@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DB;
 import db.DbException;
@@ -50,13 +53,46 @@ public class PacienteDaoJDBC implements PacienteDao {
 
 	@Override
 	public List<Paciente> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select paciente.* , endereco.*, consulta.*, pagamento.*,login.* from paciente "
+				+ "left join endereco on paciente.id = endereco.idPaciente "
+				+ "left join consulta on paciente.id = consulta.idPaciente "
+				+ "left join pagamento on paciente.id = pagamento.idConsulta "
+				+ "left join login on paciente.id = login.idPaciente ";
+
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(sql);
+			rs = st.executeQuery();
+			List<Paciente> list = new ArrayList<>();
+			List<Consulta> con = new ArrayList<>();
+			Map<Integer, Paciente> map = new HashMap<>();
+			while (rs.next()) {
+				Paciente obj = map.get(rs.getInt("paciente.id"));
+				
+					con.add(instantiateConsulta(rs, instantiatePagamento(rs)));
+				
+				
+				if(obj == null) {
+					obj = instantiatePaciente(rs, instantiateEndereco(rs), instantiateLogin(rs), con);
+					map.put(rs.getInt("paciente.id"), obj);
+					list.add(obj);
+				}
+				
+				
+			}
+			return list;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeResultSet(rs);
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
 	public Paciente findById(Integer id) {
-		String sql = "select paciente.* , endereco.*, consulta.*, pagamento.*,login.* from paciente "
+		String sql = "select distinct paciente.* , endereco.*, consulta.*, pagamento.*,login.* from paciente "
 				+ "left join endereco on paciente.id = endereco.idPaciente "
 				+ "left join consulta on paciente.id = consulta.idPaciente "
 				+ "left join pagamento on paciente.id = pagamento.idConsulta "
@@ -65,16 +101,16 @@ public class PacienteDaoJDBC implements PacienteDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			st = conn.prepareStatement(sql);
 			st.setInt(1, id);
 			rs = st.executeQuery();
-
-			if (rs.next()) {
-				Paciente obj = instantiatePaciente(rs, instantiateEndereco(rs), instantiateLogin(rs),
-						instantiateConsultas(rs));
-				return obj;
+			Paciente obj = null;
+			List<Consulta> list= new ArrayList<>();
+			while (rs.next()) {
+				list.add(instantiateConsulta(rs, instantiatePagamento(rs)));
+				 obj = instantiatePaciente(rs, instantiateEndereco(rs), instantiateLogin(rs), list);
 			}
-			return null;
+			return obj;
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		} finally {
@@ -104,18 +140,9 @@ public class PacienteDaoJDBC implements PacienteDao {
 		}
 	}
 
-	private List<Consulta> instantiateConsultas(ResultSet rs) throws SQLException {
-		List<Consulta> consultas = new ArrayList<>();
-		consultas.add(instantiateConsulta(rs, instantiatePagamento(rs)));
-		while (rs.next()) {
-			consultas.add(instantiateConsulta(rs, instantiatePagamento(rs)));
-		}
-		rs.first();
-		return consultas;
-	}
 
 	private Consulta instantiateConsulta(ResultSet rs, Pagamento pagamento) throws SQLException {
-		if(rs.getString("consulta.id") != null) {
+		if (rs.getString("consulta.id") != null) {
 			Consulta cons = new Consulta();
 			cons.setId(rs.getInt("consulta.id"));
 			cons.setDataMarcada(rs.getTimestamp("dataMarcada"));
@@ -125,11 +152,11 @@ public class PacienteDaoJDBC implements PacienteDao {
 			cons.setPagamento(pagamento);
 			return cons;
 		}
-		
+
 		return null;
 	}
 
-	private Paciente instantiatePaciente(ResultSet rs, Endereco end, Login l, List<Consulta> consultas)
+	private Paciente instantiatePaciente(ResultSet rs, Endereco end, Login l, List<Consulta> list)
 			throws SQLException {
 		Paciente obj = new Paciente();
 		obj.setId(rs.getInt("paciente.id"));
@@ -140,7 +167,7 @@ public class PacienteDaoJDBC implements PacienteDao {
 		obj.setTelefone(rs.getString("telefone"));
 		obj.setEndereco(end);
 		obj.setLogin(l);
-		obj.setConsultas(consultas);
+		obj.setConsultas(list);
 		return obj;
 	}
 

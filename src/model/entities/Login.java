@@ -2,10 +2,10 @@ package model.entities;
 
 import java.io.Serializable;
 
-public class Login implements Serializable{
-	
+public class Login implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer id;
 	private String usuario;
 	private String senha;
@@ -90,6 +90,5 @@ public class Login implements Serializable{
 		builder.append("]");
 		return builder.toString();
 	}
-
 
 }
