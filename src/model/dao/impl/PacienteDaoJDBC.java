@@ -65,21 +65,26 @@ public class PacienteDaoJDBC implements PacienteDao {
 			st = conn.prepareStatement(sql);
 			rs = st.executeQuery();
 			List<Paciente> list = new ArrayList<>();
-			List<Consulta> con = new ArrayList<>();
 			Map<Integer, Paciente> map = new HashMap<>();
+
 			while (rs.next()) {
 				Paciente obj = map.get(rs.getInt("paciente.id"));
-				
-					con.add(instantiateConsulta(rs, instantiatePagamento(rs)));
-				
-				
-				if(obj == null) {
-					obj = instantiatePaciente(rs, instantiateEndereco(rs), instantiateLogin(rs), con);
+				Consulta consulta = null;
+				Endereco endereco = null;
+				Login login = null;
+				List<Consulta> consultas = new ArrayList<>();
+				if (obj == null) {
+					endereco = instantiateEndereco(rs);
+					login = instantiateLogin(rs);
+					Pagamento pagamento = instantiatePagamento(rs);
+					consulta = instantiateConsulta(rs, pagamento);
+					consultas.add(consulta);	
 					map.put(rs.getInt("paciente.id"), obj);
-					list.add(obj);
+
 				}
-				
-				
+				obj = instantiatePaciente(rs, endereco, login, consultas);
+				list.add(obj);
+
 			}
 			return list;
 		} catch (SQLException e) {
@@ -105,10 +110,10 @@ public class PacienteDaoJDBC implements PacienteDao {
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			Paciente obj = null;
-			List<Consulta> list= new ArrayList<>();
+			List<Consulta> list = new ArrayList<>();
 			while (rs.next()) {
 				list.add(instantiateConsulta(rs, instantiatePagamento(rs)));
-				 obj = instantiatePaciente(rs, instantiateEndereco(rs), instantiateLogin(rs), list);
+				obj = instantiatePaciente(rs, instantiateEndereco(rs), instantiateLogin(rs), list);
 			}
 			return obj;
 		} catch (SQLException e) {
@@ -140,7 +145,6 @@ public class PacienteDaoJDBC implements PacienteDao {
 		}
 	}
 
-
 	private Consulta instantiateConsulta(ResultSet rs, Pagamento pagamento) throws SQLException {
 		if (rs.getString("consulta.id") != null) {
 			Consulta cons = new Consulta();
@@ -156,8 +160,7 @@ public class PacienteDaoJDBC implements PacienteDao {
 		return null;
 	}
 
-	private Paciente instantiatePaciente(ResultSet rs, Endereco end, Login l, List<Consulta> list)
-			throws SQLException {
+	private Paciente instantiatePaciente(ResultSet rs, Endereco end, Login l, List<Consulta> list) throws SQLException {
 		Paciente obj = new Paciente();
 		obj.setId(rs.getInt("paciente.id"));
 		obj.setCpf(rs.getString("cpf"));
@@ -168,6 +171,19 @@ public class PacienteDaoJDBC implements PacienteDao {
 		obj.setEndereco(end);
 		obj.setLogin(l);
 		obj.setConsultas(list);
+		return obj;
+	}
+
+	private Paciente instantiatePaciente(ResultSet rs, Endereco end, Login l) throws SQLException {
+		Paciente obj = new Paciente();
+		obj.setId(rs.getInt("paciente.id"));
+		obj.setCpf(rs.getString("cpf"));
+		obj.setDataNascimento(rs.getDate("dataNascimento"));
+		obj.setEmail(rs.getString("email"));
+		obj.setNome(rs.getString("nome"));
+		obj.setTelefone(rs.getString("telefone"));
+		obj.setEndereco(end);
+		obj.setLogin(l);
 		return obj;
 	}
 
