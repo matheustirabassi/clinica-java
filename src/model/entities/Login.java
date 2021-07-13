@@ -9,16 +9,15 @@ public class Login implements Serializable {
 	private Integer id;
 	private String usuario;
 	private String senha;
-	private Paciente paciente;
 
 	public Login() {
 	}
 
-	public Login(Integer id, String usuario, String senha, Paciente paciente) {
+	public Login(Integer id, String usuario, String senha) {
 		this.id = id;
 		this.usuario = usuario;
 		this.senha = senha;
-		this.paciente = paciente;
+
 	}
 
 	public Integer getId() {
@@ -45,13 +44,6 @@ public class Login implements Serializable {
 		this.senha = senha;
 	}
 
-	public Paciente getPaciente() {
-		return paciente;
-	}
-
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
-	}
 
 	@Override
 	public int hashCode() {
