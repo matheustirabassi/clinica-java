@@ -1,7 +1,7 @@
 package model.dao;
 
 import db.DB;
-import model.dao.impl.PacienteDaoJDBC;
+import model.dao.service.PacienteDaoJDBC;
 
 public class DaoFactory {
 
