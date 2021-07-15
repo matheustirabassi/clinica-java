@@ -11,7 +11,7 @@ public interface LoginDao {
 
 	void deleteById(Integer id);
 
-	Login findById(Integer id);
-
+	Login findByLogin(String st);
+	
 	List<Login> findAll();
 }

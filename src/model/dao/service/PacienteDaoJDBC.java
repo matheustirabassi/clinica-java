@@ -34,7 +34,7 @@ public class PacienteDaoJDBC implements PacienteDao {
 	}
 
 	@Override
-	public void insert(Paciente obj) {
+	public void insert(Paciente obj, Endereco obj2, Login obj3) {
 		String sql = "INSERT INTO paciente(nome, cpf, telefone, email, dataNascimento) VALUES (?,?,?,?,?)";
 		String sql2 = "INSERT INTO endereco(logradouro, numero, bairro, estado, cidade, cep, complemento, idPaciente) VALUES (?,?,?,?,?,?,?,?)";
 		String sql3 = "INSERT INTO login(usuario, senha, idPaciente) VALUES (?,?,?)";
@@ -53,13 +53,13 @@ public class PacienteDaoJDBC implements PacienteDao {
 				st.executeUpdate();
 				
 				st2 = conn.prepareStatement(sql2);
-				st2.setString(1, obj.getEndereco().getLogradouro());
-				st2.setInt(2, obj.getEndereco().getNumero());
-				st2.setString(3, obj.getEndereco().getBairro());
-				st2.setString(4, obj.getEndereco().getEstado());
-				st2.setString(5, obj.getEndereco().getCidade());
-				st2.setInt(6, obj.getEndereco().getCep());
-				st2.setString(7, obj.getEndereco().getComplemento());
+				st2.setString(1, obj2.getLogradouro());
+				st2.setInt(2, obj2.getNumero());
+				st2.setString(3, obj2.getBairro());
+				st2.setString(4, obj2.getEstado());
+				st2.setString(5, obj2.getCidade());
+				st2.setInt(6, obj2.getCep());
+				st2.setString(7, obj2.getComplemento());
 				st3 = conn.prepareStatement("SELECT MAX(ID) FROM paciente");
 				rs = st3.executeQuery();
 				rs.next();
@@ -67,8 +67,8 @@ public class PacienteDaoJDBC implements PacienteDao {
 				st2.executeUpdate();
 				
 				st4 = conn.prepareStatement(sql3);
-				st4.setString(1, obj.getLogin().getUsuario());
-				st4.setString(2, obj.getLogin().getSenha());
+				st4.setString(1, obj3.getUsuario());
+				st4.setString(2, obj3.getSenha());
 				st4.setInt(3, rs.getInt("MAX(ID)"));
 				st4.executeUpdate();
 				
@@ -83,7 +83,7 @@ public class PacienteDaoJDBC implements PacienteDao {
 	}
 
 	@Override
-	public void update(Paciente obj) {
+	public void update(Paciente obj, Endereco obj2, Login obj3) {
 		String sql = "UPDATE paciente SET nome = ?, cpf = ?, telefone = ?, email = ?, dataNascimento = ? "
 				+ "WHERE id = ?";
 		PreparedStatement st = null;
@@ -170,7 +170,7 @@ public class PacienteDaoJDBC implements PacienteDao {
 			DB.closeStatement(st);
 		}
 	}
-
+	
 	@Override
 	public Paciente findById(Integer id) {
 		String sql = "select distinct paciente.* , endereco.*, consulta.*, pagamento.*,login.* from paciente "
@@ -281,6 +281,54 @@ public class PacienteDaoJDBC implements PacienteDao {
 		end.setEstado(rs.getString("estado"));
 		end.setComplemento(rs.getString("complemento"));
 		return end;
+	}
+
+	@Override
+	public Paciente findByIdLogin(Integer idPaciente) {
+		String sql = "select distinct paciente.* , endereco.*, consulta.*,login.* from paciente "
+				+ "left join endereco on paciente.id = endereco.idPaciente "
+				+ "left join consulta on paciente.id = consulta.idPaciente "
+				+ "left join login on paciente.id = login.idPaciente  where paciente.id = ?";
+
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(sql);
+			st.setInt(1, idPaciente);
+			rs = st.executeQuery();
+			Paciente obj = new Paciente();
+			Endereco obj2 = new Endereco();
+			Login obj3 = new Login();
+			
+			while (rs.next()) {
+				obj.setId(idPaciente);
+				obj.setNome(rs.getString("nome"));
+				obj.setCpf(rs.getString("cpf"));
+				obj.setTelefone(rs.getString("telefone"));
+				obj.setEmail(rs.getString("email"));
+				obj.setDataNascimento(rs.getDate("dataNascimento"));
+				obj2.setLogradouro(rs.getString("logradouro"));
+				obj2.setId(idPaciente);
+				obj2.setNumero(rs.getInt("numero"));
+				obj2.setBairro(rs.getString("bairro"));
+				obj2.setEstado(rs.getString("estado"));
+				obj2.setCidade(rs.getString("cidade"));
+				obj2.setCep(rs.getInt("cep"));
+				obj2.setComplemento(rs.getString("complemento"));
+				obj3.setIdPaciente(idPaciente);
+				obj3.setId(idPaciente);
+				obj3.setUsuario(rs.getString("usuario"));
+				obj3.setSenha(rs.getString("senha"));
+				obj.setLogin(obj3);
+				obj.setEndereco(obj2);
+			}
+			return obj;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeResultSet(rs);
+			DB.closeStatement(st);
+		}
 	}
 
 }
