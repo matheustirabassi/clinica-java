@@ -61,7 +61,6 @@ public class LoginDaoJDBC implements LoginDao {
 				login.setId(rs.getInt("id"));
 				login.setUsuario(rs.getString("usuario"));
 				login.setSenha(rs.getString("senha"));
-				login.setIdPaciente(rs.getInt("idPaciente"));
 
 			}
 			return login;

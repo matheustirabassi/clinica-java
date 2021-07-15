@@ -11,15 +11,15 @@ public class Consulta {
 	private Integer id;
 	private Date dataMarcada;
 	private String observacao;
-	private TipoConsulta tipoConsulta;
-	private StatusConsulta statusConsulta;
+	private Integer tipoConsulta;
+	private Integer statusConsulta;
 	private Pagamento pagamento;
 
 	public Consulta() {
 	}
 
-	public Consulta(Integer id, Date dataMarcada, String observacao, TipoConsulta tipoConsulta,
-			StatusConsulta statusConsulta, Pagamento pagamento) {
+	public Consulta(Integer id, Date dataMarcada, String observacao, Integer tipoConsulta,
+			Integer statusConsulta, Pagamento pagamento) {
 		this.id = id;
 		this.dataMarcada = dataMarcada;
 		this.observacao = observacao;
@@ -46,19 +46,19 @@ public class Consulta {
 	}
 
 	public TipoConsulta getTipoConsulta() {
-		return tipoConsulta;
+		return TipoConsulta.toEnum(tipoConsulta);
 	}
 
 	public void setTipoConsulta(TipoConsulta tipoConsulta) {
-		this.tipoConsulta = tipoConsulta;
+		this.tipoConsulta = tipoConsulta.getCod();
 	}
 
 	public StatusConsulta getStatusConsulta() {
-		return statusConsulta;
+		return StatusConsulta.toEnum(tipoConsulta);
 	}
 
 	public void setStatusConsulta(StatusConsulta statusConsulta) {
-		this.statusConsulta = statusConsulta;
+		this.statusConsulta = statusConsulta.getCod();
 	}
 
 	public Pagamento getPagamento() {

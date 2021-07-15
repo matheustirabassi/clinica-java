@@ -1,16 +1,16 @@
 package model.dao.controller;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
@@ -19,13 +19,6 @@ import model.dao.PacienteDao;
 import model.entities.Endereco;
 import model.entities.Login;
 import model.entities.Paciente;
-
-
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JPasswordField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class CadastrarPaciente {
 
@@ -265,7 +258,7 @@ public class CadastrarPaciente {
 						
 						lg.setUsuario(pa.getLogin().getUsuario());
 						lg.setSenha(pa.getLogin().getSenha());
-						lg.setIdPaciente(pa.getId());
+						
 						lg.setId(pa.getId());
 						DefaultView window = new DefaultView(lg);
 						window.frame.setVisible(true);
@@ -383,7 +376,7 @@ public class CadastrarPaciente {
 					
 					pacienteDao.update(pa, en, lg);
 					JOptionPane.showInternalMessageDialog(null, "Salvo/Alterado com Sucesso!");
-					lg.setIdPaciente(pa.getId());
+					
 					
 					frame.setVisible(false);
 					DefaultView window = new DefaultView(lg);

@@ -1,19 +1,15 @@
 package model.dao.controller;
 
-import java.awt.EventQueue;
+import java.awt.Button;
+import java.awt.Font;
 
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.Font;
 import javax.swing.JRadioButton;
-import javax.swing.JList;
-import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 import model.entities.Paciente;
-
-import javax.swing.JButton;
-import java.awt.Button;
 
 public class CadastrarConsulta {
 
