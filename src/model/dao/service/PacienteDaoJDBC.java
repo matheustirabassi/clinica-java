@@ -122,7 +122,7 @@ public class PacienteDaoJDBC implements PacienteDao {
 				+ "left join endereco on paciente.id = endereco.idPaciente "
 				+ "left join consulta on paciente.id = consulta.idPaciente "
 				+ "left join pagamento on paciente.id = pagamento.idConsulta "
-				+ "left join login on paciente.id = login.idPaciente;";
+				+ "left join login on paciente.id = login.idPaciente ORDER BY paciente.id;";
 
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -141,12 +141,12 @@ public class PacienteDaoJDBC implements PacienteDao {
 				if (obj == null) {
 					endereco = instantiateEndereco(rs);
 					login = instantiateLogin(rs);
+					obj = instantiatePaciente(rs, endereco, login);
 					map.put(rs.getInt("paciente.id"), obj);
 
 				}
-				consulta = instantiateConsulta(rs);
-				consultas.add(consulta);
-				obj = instantiatePaciente(rs, endereco, login, consultas);
+				Consulta c = instantiateConsulta(rs);
+				obj.getConsultas().add(c);
 				
 				list.add(obj);
 
@@ -195,8 +195,8 @@ public class PacienteDaoJDBC implements PacienteDao {
 			cons.setId(rs.getInt("consulta.id"));
 			cons.setDataMarcada(rs.getTimestamp("dataMarcada"));
 			cons.setObservacao(rs.getString("observacao"));
-			cons.setStatusConsulta(StatusConsulta.values()[rs.getInt("statusConsulta") - 1]);
-			cons.setTipoConsulta(TipoConsulta.values()[rs.getInt("tipoConsulta") - 1]);
+			cons.setStatusConsulta(StatusConsulta.toEnum(rs.getInt("statusConsulta")));
+			cons.setTipoConsulta(TipoConsulta.toEnum(rs.getInt("tipoConsulta")));
 			return cons;
 		}
 
@@ -214,6 +214,20 @@ public class PacienteDaoJDBC implements PacienteDao {
 		obj.setEndereco(end);
 		obj.setLogin(l);
 		obj.setConsultas(list);
+		return obj;
+	}
+
+	private Paciente instantiatePaciente(ResultSet rs, Endereco end, Login l) throws SQLException {
+		Paciente obj = new Paciente();
+		obj.setId(rs.getInt("paciente.id"));
+		obj.setCpf(rs.getString("cpf"));
+		obj.setDataNascimento(rs.getDate("dataNascimento"));
+		obj.setEmail(rs.getString("email"));
+		obj.setNome(rs.getString("nome"));
+		obj.setTelefone(rs.getString("telefone"));
+		obj.setEndereco(end);
+		obj.setLogin(l);
+
 		return obj;
 	}
 
