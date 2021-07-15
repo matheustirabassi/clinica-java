@@ -39,6 +39,7 @@ public class LoginView {
 	 */
 	public LoginView() {
 		initialize();
+		
 	}
 
 	/**
@@ -109,7 +110,7 @@ public class LoginView {
 				}
 				else {
 					lg = loginDao.findByLogin(tfUsuario.getText());
-					
+					System.out.println(lg.getUsuario());
 					if(lg.getSenha() == null )
 					{
 						JOptionPane.showInternalMessageDialog(null, "Usuário incorreto", "AVISO ", JOptionPane.WARNING_MESSAGE);

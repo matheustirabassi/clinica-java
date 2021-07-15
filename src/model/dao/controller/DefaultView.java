@@ -65,7 +65,14 @@ public class DefaultView {
 		btnAddConsulta.setActionCommand("");
 		btnAddConsulta.setBounds(84, 169, 109, 60);
 		frame.getContentPane().add(btnAddConsulta);
-		
+		btnAddConsulta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+				CadastrarConsulta window;
+				window = new CadastrarConsulta(pc);
+				window.frame.setVisible(true);
+			}
+		});
 		
 		
 		System.out.println(obj.getIdPaciente());

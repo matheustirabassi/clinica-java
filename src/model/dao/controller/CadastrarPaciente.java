@@ -179,7 +179,7 @@ public class CadastrarPaciente {
 		lblNewLabel_12.setBounds(200, 267, 46, 14);
 		frame.getContentPane().add(lblNewLabel_12);
 		
-		JFormattedTextField tfCep = new JFormattedTextField(new MaskFormatter("#########"));
+		 tfCep = new JTextField();
 		tfCep.setText("");
 		tfCep.setBounds(256, 264, 86, 20);
 		frame.getContentPane().add(tfCep);
@@ -306,7 +306,7 @@ public class CadastrarPaciente {
 						JOptionPane.showInternalMessageDialog(null, "Há campos em branco!", "AVISO ", JOptionPane.WARNING_MESSAGE);
 					}
 					else if(tfSenha.getText() == tfSenha2.getText()) {
-						System.out.println(tfSenha.getText()+" != "+tfSenha2.getText());
+						
 						JOptionPane.showInternalMessageDialog(null, "Senhas não iguais", "AVISO ", JOptionPane.WARNING_MESSAGE);
 					}
 					else if(opt == 0){
@@ -338,32 +338,34 @@ public class CadastrarPaciente {
 						
 							pacienteDao.insert(pc, en, lg);
 						JOptionPane.showInternalMessageDialog(null, "Salvo/Alterado com Sucesso!");
-					
-
-					tfNome.setText("");
-					tfTelefone.setText("");
-					tfEmail.setText("");
-					tfCpf.setText("");
-					tfComplemento.setText("");
-					tfUsuario.setText("");
-					tfSenha.setText("");
-					tfSenha2.setText("");
-					tfLogra.setText("");
-					tfNum.setText("");
-					tfCep.setText("");
-					tfCidade.setText("");
-					tfEstado.setText("");
-					tfDtNasci.setText("");
-				}
+						tfNome.setText("");
+						tfTelefone.setText("");
+						tfEmail.setText("");
+						tfCpf.setText("");
+						tfComplemento.setText("");
+						tfUsuario.setText("");
+						tfSenha.setText("");
+						tfSenha2.setText("");
+						tfLogra.setText("");
+						tfNum.setText("");
+						tfCep.setText("");
+						tfCidade.setText("");
+						tfEstado.setText("");
+						tfDtNasci.setText("");
+						
+						frame.setVisible(false);
+						LoginView window = new LoginView();
+						window.frame.setVisible(true);
+					}
 				else {
 					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 						
-					pc.setNome(tfNome.getText());
-					pc.setCpf(tfCpf.getText());
-					pc.setTelefone(tfTelefone.getText());
-					pc.setEmail(tfEmail.getText());
+					pa.setNome(tfNome.getText());
+					pa.setCpf(tfCpf.getText());
+					pa.setTelefone(tfTelefone.getText());
+					pa.setEmail(tfEmail.getText());
 					try {
-						pc.setDataNascimento(sdf.parse(tfDtNasci.getText()));
+						pa.setDataNascimento(sdf.parse(tfDtNasci.getText()));
 					} catch (ParseException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -379,8 +381,13 @@ public class CadastrarPaciente {
 					lg.setUsuario(tfUsuario.getText());
 					lg.setSenha(tfSenha.getText());
 					
-					pacienteDao.update(pc, en, lg);
+					pacienteDao.update(pa, en, lg);
 					JOptionPane.showInternalMessageDialog(null, "Salvo/Alterado com Sucesso!");
+					lg.setIdPaciente(pa.getId());
+					
+					frame.setVisible(false);
+					DefaultView window = new DefaultView(lg);
+					window.frame.setVisible(true);
 				}
 				
 			}
