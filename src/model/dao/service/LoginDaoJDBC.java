@@ -4,19 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import db.DB;
 import db.DbException;
 import model.dao.LoginDao;
-import model.entities.Consulta;
-import model.entities.Endereco;
 import model.entities.Login;
-import model.entities.Paciente;
-import model.entities.Pagamento;
 
 public class LoginDaoJDBC implements LoginDao {
 
@@ -78,6 +71,12 @@ public class LoginDaoJDBC implements LoginDao {
 			DB.closeResultSet(rs);
 			DB.closeStatement(ps);
 		}
+	}
+
+	@Override
+	public Login findById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 
