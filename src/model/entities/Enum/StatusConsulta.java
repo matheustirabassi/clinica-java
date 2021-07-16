@@ -3,9 +3,9 @@ package model.entities.Enum;
 public enum StatusConsulta {
 
 	AGENDADO(1, "Agendado"), FINALIZADO(2, "Finalizado");
+
 	private int cod;
 	private String descricao;
-
 
 	private StatusConsulta(int cod, String descricao) {
 		this.cod = cod;

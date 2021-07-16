@@ -22,22 +22,20 @@ public class LoginDaoJDBC implements LoginDao {
 	@Override
 	public void insert(Login obj) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void update(Login obj) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
-		
-	}
 
-	
+	}
 
 	@Override
 	public List<Login> findAll() {
@@ -57,7 +55,7 @@ public class LoginDaoJDBC implements LoginDao {
 			rs = ps.executeQuery();
 			Login login = new Login();
 			while (rs.next()) {
-				
+
 				login.setId(rs.getInt("id"));
 				login.setUsuario(rs.getString("usuario"));
 				login.setSenha(rs.getString("senha"));
@@ -78,8 +76,5 @@ public class LoginDaoJDBC implements LoginDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-
-	
 
 }

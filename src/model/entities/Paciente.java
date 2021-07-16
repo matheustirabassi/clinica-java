@@ -33,7 +33,6 @@ public class Paciente implements Serializable {
 		this.email = email;
 		this.endereco = endereco;
 	}
-	
 
 	public Paciente(Integer id, String nome, String cpf, String telefone, Date dataNascimento, String email,
 			Endereco endereco, Login login) {

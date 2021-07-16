@@ -43,41 +43,39 @@ public class PacienteDaoJDBC implements PacienteDao {
 		PreparedStatement st3 = null;
 		PreparedStatement st4 = null;
 		ResultSet rs = null;
-		try{
-				st = conn.prepareStatement(sql);
-				st.setString(1, obj.getNome());
-				st.setString(2, obj.getCpf());
-				st.setString(3, obj.getTelefone());
-				st.setString(4, obj.getEmail());
-				st.setDate(5, new java.sql.Date(obj.getDataNascimento().getTime()));
-				st.executeUpdate();
-				
-				st2 = conn.prepareStatement(sql2);
-				st2.setString(1, obj2.getLogradouro());
-				st2.setInt(2, obj2.getNumero());
-				st2.setString(3, obj2.getBairro());
-				st2.setString(4, obj2.getEstado());
-				st2.setString(5, obj2.getCidade());
-				st2.setInt(6, obj2.getCep());
-				st2.setString(7, obj2.getComplemento());
-				st3 = conn.prepareStatement("SELECT MAX(ID) FROM paciente");
-				rs = st3.executeQuery();
-				rs.next();
-				st2.setInt(8, rs.getInt("MAX(ID)"));
-				st2.executeUpdate();
-				
-				st4 = conn.prepareStatement(sql3);
-				st4.setString(1, obj3.getUsuario());
-				st4.setString(2, obj3.getSenha());
-				st4.setInt(3, rs.getInt("MAX(ID)"));
-				st4.executeUpdate();
-				
-				
-				
+		try {
+			st = conn.prepareStatement(sql);
+			st.setString(1, obj.getNome());
+			st.setString(2, obj.getCpf());
+			st.setString(3, obj.getTelefone());
+			st.setString(4, obj.getEmail());
+			st.setDate(5, new java.sql.Date(obj.getDataNascimento().getTime()));
+			st.executeUpdate();
+
+			st2 = conn.prepareStatement(sql2);
+			st2.setString(1, obj2.getLogradouro());
+			st2.setInt(2, obj2.getNumero());
+			st2.setString(3, obj2.getBairro());
+			st2.setString(4, obj2.getEstado());
+			st2.setString(5, obj2.getCidade());
+			st2.setInt(6, obj2.getCep());
+			st2.setString(7, obj2.getComplemento());
+			st3 = conn.prepareStatement("SELECT MAX(ID) FROM paciente");
+			rs = st3.executeQuery();
+			rs.next();
+			st2.setInt(8, rs.getInt("MAX(ID)"));
+			st2.executeUpdate();
+
+			st4 = conn.prepareStatement(sql3);
+			st4.setString(1, obj3.getUsuario());
+			st4.setString(2, obj3.getSenha());
+			st4.setInt(3, rs.getInt("MAX(ID)"));
+			st4.executeUpdate();
+
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		} finally {
-			
+
 			DB.closeStatement(st);
 		}
 	}
@@ -87,22 +85,20 @@ public class PacienteDaoJDBC implements PacienteDao {
 		String sql = "UPDATE paciente SET nome = ?, cpf = ?, telefone = ?, email = ?, dataNascimento = ? "
 				+ "WHERE id = ?";
 		PreparedStatement st = null;
-		try{
-				st = conn.prepareStatement(sql);
-				st.setString(1, obj.getNome());
-				st.setString(2, obj.getCpf());
-				st.setString(3, obj.getTelefone());
-				st.setString(4, obj.getEmail());
-				st.setDate(5, new java.sql.Date(obj.getDataNascimento().getTime()));
-				st.setInt(6, obj.getId());
-				st.executeUpdate();
-				
-				
-				
+		try {
+			st = conn.prepareStatement(sql);
+			st.setString(1, obj.getNome());
+			st.setString(2, obj.getCpf());
+			st.setString(3, obj.getTelefone());
+			st.setString(4, obj.getEmail());
+			st.setDate(5, new java.sql.Date(obj.getDataNascimento().getTime()));
+			st.setInt(6, obj.getId());
+			st.executeUpdate();
+
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		} finally {
-			
+
 			DB.closeStatement(st);
 		}
 
@@ -113,15 +109,13 @@ public class PacienteDaoJDBC implements PacienteDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-				"DELETE paciente, endereco, login FROM paciente INNER JOIN endereco ON endereco.idPaciente = paciente.id INNER JOIN login ON login.idPaciente = paciente.id WHERE paciente.id = ?");
+					"DELETE paciente, endereco, login FROM paciente INNER JOIN endereco ON endereco.idPaciente = paciente.id INNER JOIN login ON login.idPaciente = paciente.id WHERE paciente.id = ?");
 			st.setInt(1, id);
 
 			st.executeUpdate();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new DbIntegrityException(e.getMessage());
-		} 
-		finally {
+		} finally {
 			DB.closeStatement(st);
 		}
 
@@ -170,7 +164,7 @@ public class PacienteDaoJDBC implements PacienteDao {
 			DB.closeStatement(st);
 		}
 	}
-	
+
 	@Override
 	public Paciente findById(Integer id) {
 		String sql = "select distinct paciente.* , endereco.*, consulta.*, pagamento.*,login.* from paciente "
@@ -299,7 +293,7 @@ public class PacienteDaoJDBC implements PacienteDao {
 			Paciente obj = new Paciente();
 			Endereco obj2 = new Endereco();
 			Login obj3 = new Login();
-			
+
 			while (rs.next()) {
 				obj.setId(idPaciente);
 				obj.setNome(rs.getString("nome"));

@@ -16,28 +16,29 @@ import model.entities.Login;
 import model.entities.Medico;
 import model.entities.Paciente;
 
-public class MedicoDaoJDBC implements MedicoDao{
+public class MedicoDaoJDBC implements MedicoDao {
 	private Connection conn;
 
 	public MedicoDaoJDBC(Connection conn) {
 		this.conn = conn;
 	}
+
 	@Override
 	public void insert(Medico obj) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void update(Medico obj) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class MedicoDaoJDBC implements MedicoDao{
 		try {
 			st = conn.prepareStatement(sql);
 			rs = st.executeQuery();
-			
+
 			List<Medico> list = new ArrayList<>();
 			while (rs.next()) {
 				Medico medico = instantiateMedico(rs);
@@ -69,10 +70,13 @@ public class MedicoDaoJDBC implements MedicoDao{
 			DB.closeStatement(st);
 		}
 	}
+
 	private Medico instantiateMedico(ResultSet rs) throws SQLException {
-		Medico obj = new Medico(rs.getInt("medico.id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("telefone"), rs.getString("email"), new Especialidade(rs.getInt("especialidade.id"), rs.getString("especialidade.nomeEspecialidade"), rs.getString("especialidade.descricao")), null, null);
+		Medico obj = new Medico(rs.getInt("medico.id"), rs.getString("nome"), rs.getString("cpf"),
+				rs.getString("telefone"), rs.getString("email"), new Especialidade(rs.getInt("especialidade.id"),
+						rs.getString("especialidade.nomeEspecialidade"), rs.getString("especialidade.descricao")),
+				null, null);
 		return obj;
 	}
 
 }
-

@@ -14,7 +14,7 @@ public interface PacienteDao {
 	void deleteById(Integer id);
 
 	Paciente findById(Integer id);
-	
+
 	Paciente findByIdLogin(Integer idPaciente);
 
 	List<Paciente> findAll();

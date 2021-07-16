@@ -11,12 +11,15 @@ public class DaoFactory {
 	public static PacienteDao createPacienteDao() {
 		return new PacienteDaoJDBC(DB.getConnection());
 	}
+
 	public static LoginDao createLoginDao() {
 		return new LoginDaoJDBC(DB.getConnection());
 	}
+
 	public static MedicoDao createMedicoDao() {
 		return new MedicoDaoJDBC(DB.getConnection());
 	}
+
 	public static ConsultaDao createConsultaDao() {
 		return new ConsultaDaoJDBC(DB.getConnection());
 	}

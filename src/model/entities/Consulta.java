@@ -16,11 +16,12 @@ public class Consulta {
 	private Pagamento pagamento;
 	private Medico medico;
 	private Paciente paciente;
+
 	public Consulta() {
 	}
 
-	public Consulta(Integer id, Date dataMarcada, String observacao, Integer tipoConsulta,
-			Integer statusConsulta, Pagamento pagamento) {
+	public Consulta(Integer id, Date dataMarcada, String observacao, Integer tipoConsulta, Integer statusConsulta,
+			Pagamento pagamento) {
 		this.id = id;
 		this.dataMarcada = dataMarcada;
 		this.observacao = observacao;
@@ -29,7 +30,7 @@ public class Consulta {
 		this.statusConsulta = statusConsulta;
 		this.pagamento = pagamento;
 	}
-	
+
 	public Consulta(Integer id, Date dataMarcada, String observacao, Integer tipoConsulta, Integer statusConsulta,
 			Pagamento pagamento, Medico medico, Paciente paciente) {
 		super();

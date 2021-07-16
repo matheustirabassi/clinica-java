@@ -5,9 +5,9 @@ import java.util.List;
 import model.entities.Medico;
 
 public interface MedicoDao {
-	 void insert(Medico obj);
+	void insert(Medico obj);
 
-	 void update(Medico obj);
+	void update(Medico obj);
 
 	void deleteById(Integer id);
 

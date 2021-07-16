@@ -30,8 +30,6 @@ public class DefaultView {
 	LoginDao loginDao = DaoFactory.createLoginDao();
 	public JFrame frame;
 	public String str;
-	
-	
 
 	/**
 	 * Create the application.
@@ -40,26 +38,22 @@ public class DefaultView {
 		initialize(obj);
 	}
 
-	
-	
 	public void initialize(Login obj) {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(255, 240, 245));
 		frame.setBounds(100, 100, 629, 436);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JLabel lblNewLabel = new JLabel("Usu\u00E1rio:");
 		lblNewLabel.setBounds(10, 11, 61, 14);
 		frame.getContentPane().add(lblNewLabel);
-		
-		
+
 		JLabel lblUsuario = new JLabel("");
 		lblUsuario.setBounds(81, 11, 70, 14);
 		frame.getContentPane().add(lblUsuario);
 		lblUsuario.setText(obj.getUsuario());
-		
-		
+
 		Button btnAddConsulta = new Button("Adicionar Consulta");
 		btnAddConsulta.setBackground(new Color(224, 255, 255));
 		btnAddConsulta.setActionCommand("");
@@ -73,11 +67,10 @@ public class DefaultView {
 				window.frame.setVisible(true);
 			}
 		});
-		
-		
+
 		System.out.println(obj.getIdPaciente());
 		pc = pcDao.findByIdLogin(obj.getIdPaciente());
-		
+
 		Button btnAlterCadastro = new Button("Alterar Cadastro");
 		btnAlterCadastro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -86,7 +79,7 @@ public class DefaultView {
 				try {
 					window = new CadastrarPaciente(1, pc);
 					window.frame.setVisible(true);
-					
+
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -96,30 +89,29 @@ public class DefaultView {
 		btnAlterCadastro.setBackground(new Color(224, 255, 255));
 		btnAlterCadastro.setBounds(413, 169, 109, 60);
 		frame.getContentPane().add(btnAlterCadastro);
-		
+
 		Button btnCheckConsulta = new Button("Checar Consultas");
 		btnCheckConsulta.setBackground(new Color(224, 255, 255));
 		btnCheckConsulta.setBounds(251, 169, 109, 60);
 		frame.getContentPane().add(btnCheckConsulta);
-		
+
 		btnCheckConsulta.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
 				VisualizaConsultaView visualizaConsultaView = new VisualizaConsultaView(pc);
 				visualizaConsultaView.frmConsultas.setVisible(true);
-				
+
 			}
 		});
-		
-		
+
 		Button btnSair = new Button("Sair");
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
 				try {
-				
+
 					LoginView window = new LoginView();
 					window.frame.setVisible(true);
 				} catch (Exception e2) {
@@ -130,9 +122,7 @@ public class DefaultView {
 		btnSair.setBackground(new Color(255, 99, 71));
 		btnSair.setBounds(516, 11, 70, 22);
 		frame.getContentPane().add(btnSair);
-		 
-		
-		
+
 	}
-	
+
 }

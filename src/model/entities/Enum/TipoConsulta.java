@@ -2,7 +2,7 @@ package model.entities.Enum;
 
 public enum TipoConsulta {
 	EXAME(1, "Exame"), CONVENCIONAL(2, "Consulta convencional");
-	
+
 	private int cod;
 	private String descricao;
 
@@ -26,6 +26,7 @@ public enum TipoConsulta {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
 	public static TipoConsulta toEnum(Integer tipo) {
 		if (tipo == null) {
 			return null;

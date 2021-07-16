@@ -10,6 +10,7 @@ public class Login implements Serializable {
 	private String usuario;
 	private String senha;
 	private Integer idPaciente;
+
 	public Login() {
 	}
 

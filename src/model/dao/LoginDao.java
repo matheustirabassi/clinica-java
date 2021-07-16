@@ -10,8 +10,10 @@ public interface LoginDao {
 	void update(Login obj);
 
 	void deleteById(Integer id);
+
 	Login findById(Integer id);
+
 	Login findByLogin(String st);
-	
+
 	List<Login> findAll();
 }

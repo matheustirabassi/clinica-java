@@ -273,14 +273,14 @@ public class CadastrarPaciente {
 		});
 
 		if (opt == 1) {
-			SimpleDateFormat sdf = new SimpleDateFormat("ddmmyyyy");
+			SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
 
 			tfNome.setText(pa.getNome());
 			tfTelefone.setText(pa.getTelefone());
 			tfEmail.setText(pa.getNome());
 			tfCpf.setText(pa.getCpf());
 			tfEmail.setText(pa.getEmail());
-			tfDtNasci.setText(pa.getDataNascimento().toString());
+			tfDtNasci.setText(sdf.format(pa.getDataNascimento()));
 			tfLogra.setText(pa.getEndereco().getLogradouro());
 			tfNum.setText(pa.getEndereco().getNumero().toString());
 			tfBairro.setText(pa.getEndereco().getBairro());
@@ -380,7 +380,6 @@ public class CadastrarPaciente {
 					pacienteDao.update(pa, en, lg);
 					lg.setIdPaciente(pa.getId());
 					JOptionPane.showInternalMessageDialog(null, "Salvo/Alterado com Sucesso!");
-					
 
 					frame.setVisible(false);
 					DefaultView window = new DefaultView(lg);

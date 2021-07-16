@@ -14,9 +14,10 @@ public interface ConsultaDao {
 	void update(Consulta obj, Paciente obj2, Medico obj3);
 
 	void deleteById(Integer id);
+
 	Consulta findByIdPaciente(Integer id);
-	
-	
+
 	List<Consulta> findAll();
+
 	List<Especialidade> findAllEspecialidade();
 }

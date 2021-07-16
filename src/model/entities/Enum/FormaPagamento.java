@@ -2,10 +2,11 @@ package model.entities.Enum;
 
 public enum FormaPagamento {
 
-	BOLETO(1, "Boleto"), CARTAO_DEBITO(2, "Cartão de Débito"), CARTAO_CREDITO(3, "Cartão de Crédito"), DINHEIRO(4, "Dinheiro");
+	BOLETO(1, "Boleto"), CARTAO_DEBITO(2, "Cartão de Débito"), CARTAO_CREDITO(3, "Cartão de Crédito"),
+	DINHEIRO(4, "Dinheiro");
+
 	private int cod;
 	private String descricao;
-
 
 	private FormaPagamento(int cod, String descricao) {
 		this.cod = cod;
