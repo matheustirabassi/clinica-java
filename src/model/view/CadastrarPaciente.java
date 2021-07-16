@@ -1,4 +1,4 @@
-package model.dao.controller;
+package model.view;
 
 import java.awt.EventQueue;
 

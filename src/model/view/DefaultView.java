@@ -1,4 +1,4 @@
-package model.dao.controller;
+package model.view;
 
 import java.awt.EventQueue;
 
@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 import model.dao.DaoFactory;
 import model.dao.LoginDao;
 import model.dao.PacienteDao;
-import model.dao.service.PacienteDaoJDBC;
+import model.dao.impl.PacienteDaoJDBC;
 import model.entities.Login;
 import model.entities.Paciente;
 

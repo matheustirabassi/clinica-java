@@ -1,4 +1,4 @@
-package model.dao.controller.util;
+package model.view.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

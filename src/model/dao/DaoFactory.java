@@ -1,10 +1,10 @@
 package model.dao;
 
 import db.DB;
-import model.dao.service.ConsultaDaoJDBC;
-import model.dao.service.LoginDaoJDBC;
-import model.dao.service.MedicoDaoJDBC;
-import model.dao.service.PacienteDaoJDBC;
+import model.dao.impl.ConsultaDaoJDBC;
+import model.dao.impl.LoginDaoJDBC;
+import model.dao.impl.MedicoDaoJDBC;
+import model.dao.impl.PacienteDaoJDBC;
 
 public class DaoFactory {
 

@@ -3,7 +3,7 @@ package application;
 import java.awt.EventQueue;
 
 import db.DB;
-import model.dao.controller.LoginView;
+import model.view.LoginView;
 
 public class Main {
 

@@ -1,4 +1,4 @@
-package model.dao.controller;
+package model.view;
 
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
@@ -13,9 +13,9 @@ import javax.swing.JTable;
 
 import model.dao.DaoFactory;
 import model.dao.PacienteDao;
-import model.dao.controller.util.ConsultaTableModel;
 import model.entities.Consulta;
 import model.entities.Paciente;
+import model.view.util.ConsultaTableModel;
 
 public class VisualizaConsultaView {
 
