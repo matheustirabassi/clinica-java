@@ -9,16 +9,16 @@ public class Login implements Serializable {
 	private Integer id;
 	private String usuario;
 	private String senha;
-	private Integer idPaciente;
+	private Paciente paciente;
 
 	public Login() {
 	}
 
-	public Login(Integer id, String usuario, String senha, Integer idPaciente) {
+	public Login(Integer id, String usuario, String senha) {
 		this.id = id;
 		this.usuario = usuario;
 		this.senha = senha;
-		this.idPaciente = idPaciente;
+
 	}
 
 	public Integer getId() {
@@ -43,14 +43,6 @@ public class Login implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}
-
-	public Integer getIdPaciente() {
-		return idPaciente;
-	}
-
-	public void setIdPaciente(Integer idPaciente) {
-		this.idPaciente = idPaciente;
 	}
 
 	@Override
@@ -87,10 +79,16 @@ public class Login implements Serializable {
 		builder.append(usuario);
 		builder.append(", senha=");
 		builder.append(senha);
-		builder.append(", idPaciente=");
-		builder.append(idPaciente);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
 	}
 
 }

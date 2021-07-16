@@ -1,44 +1,33 @@
 package model.view;
 
-import java.awt.EventQueue;
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.awt.event.ActionEvent;
-
-import javax.swing.ActionMap;
-import javax.swing.ImageIcon;
-import java.awt.Color;
-import javax.swing.SwingConstants;
 
 import model.dao.DaoFactory;
-import model.dao.LoginDao;
 import model.dao.PacienteDao;
-import model.dao.impl.PacienteDaoJDBC;
 import model.entities.Login;
 import model.entities.Paciente;
 
-import java.awt.Button;
+public class MainView {
 
-public class DefaultView {
-	PacienteDao pcDao = DaoFactory.createPacienteDao();
-	Paciente pc = new Paciente();
-	Login lg = new Login();
-	LoginDao loginDao = DaoFactory.createLoginDao();
 	public JFrame frame;
 	public String str;
 
 	/**
 	 * Create the application.
 	 */
-	public DefaultView(Login obj) {
+	public MainView(Login obj) {
 		initialize(obj);
 	}
 
-	public void initialize(Login obj) {
+	public void initialize(Login objLogin) {
+
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(255, 240, 245));
 		frame.setBounds(100, 100, 629, 436);
@@ -50,9 +39,9 @@ public class DefaultView {
 		frame.getContentPane().add(lblNewLabel);
 
 		JLabel lblUsuario = new JLabel("");
-		lblUsuario.setBounds(81, 11, 70, 14);
+		lblUsuario.setBounds(81, 11, 246, 14);
 		frame.getContentPane().add(lblUsuario);
-		lblUsuario.setText(obj.getUsuario());
+		lblUsuario.setText(objLogin.getPaciente().getNome());
 
 		Button btnAddConsulta = new Button("Adicionar Consulta");
 		btnAddConsulta.setBackground(new Color(224, 255, 255));
@@ -61,23 +50,26 @@ public class DefaultView {
 		frame.getContentPane().add(btnAddConsulta);
 		btnAddConsulta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Paciente paciente = objLogin.getPaciente();
+				objLogin.setPaciente(paciente);;
 				frame.setVisible(false);
 				CadastrarConsulta window;
-				window = new CadastrarConsulta(pc);
+				window = new CadastrarConsulta(paciente);
 				window.frame.setVisible(true);
 			}
 		});
 
-		System.out.println(obj.getIdPaciente());
-		pc = pcDao.findByIdLogin(obj.getIdPaciente());
-
 		Button btnAlterCadastro = new Button("Alterar Cadastro");
 		btnAlterCadastro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				PacienteDao pacienteDao = DaoFactory.createPacienteDao();
+				Paciente paciente = pacienteDao.findById(objLogin.getPaciente().getId());
 				frame.setVisible(false);
 				CadastrarPaciente window;
 				try {
-					window = new CadastrarPaciente(1, pc);
+					objLogin.setPaciente(paciente);
+					paciente.setLogin(objLogin);
+					window = new CadastrarPaciente(1, paciente);
 					window.frame.setVisible(true);
 
 				} catch (ParseException e1) {
@@ -90,7 +82,7 @@ public class DefaultView {
 		btnAlterCadastro.setBounds(413, 169, 109, 60);
 		frame.getContentPane().add(btnAlterCadastro);
 
-		Button btnCheckConsulta = new Button("Checar Consultas");
+		Button btnCheckConsulta = new Button("Checkar Consultas");
 		btnCheckConsulta.setBackground(new Color(224, 255, 255));
 		btnCheckConsulta.setBounds(251, 169, 109, 60);
 		frame.getContentPane().add(btnCheckConsulta);
@@ -99,9 +91,18 @@ public class DefaultView {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
-				VisualizaConsultaView visualizaConsultaView = new VisualizaConsultaView(pc);
-				visualizaConsultaView.frmConsultas.setVisible(true);
+				PacienteDao pacienteDao = DaoFactory.createPacienteDao();
+				Paciente paciente = pacienteDao.findById(objLogin.getPaciente().getId());
+
+				objLogin.setPaciente(paciente);
+				paciente.setLogin(objLogin);
+				
+				if (!objLogin.getPaciente().getConsultas().isEmpty()) {
+					frame.setVisible(false);
+					VisualizaConsultaView visualizaConsultaView = new VisualizaConsultaView(paciente);
+					visualizaConsultaView.frmConsultas.setVisible(true);
+				}
+				
 
 			}
 		});

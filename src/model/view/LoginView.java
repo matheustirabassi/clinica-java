@@ -1,35 +1,23 @@
 package model.view;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
 import java.awt.Font;
-import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import db.DB;
 import model.dao.DaoFactory;
 import model.dao.LoginDao;
-import model.dao.PacienteDao;
-import model.dao.impl.LoginDaoJDBC;
 import model.entities.Login;
-import model.entities.Paciente;
-
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
 
 public class LoginView {
-	Login lg = new Login();
-	PacienteDao paciente = DaoFactory.createPacienteDao();
-	Paciente pc = new Paciente();
-	LoginDao loginDao = DaoFactory.createLoginDao();
+
 	public JFrame frame;
 	private JTextField tfUsuario;
 	private JPasswordField tfSenha;
@@ -84,48 +72,49 @@ public class LoginView {
 		btnCadastrar.setBounds(241, 299, 99, 34);
 		frame.getContentPane().add(btnCadastrar);
 
+		btnLogar.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+
+				try {
+					LoginDao loginDao = DaoFactory.createLoginDao();
+					Login login = loginDao.findByLogin(tfUsuario.getText());
+
+					if (tfUsuario.getText().equals("") || String.copyValueOf(tfSenha.getPassword()).equals("")) {
+						JOptionPane.showInternalMessageDialog(null, "Há campos em branco!", "AVISO",
+								JOptionPane.WARNING_MESSAGE);
+					} else if (login.getUsuario().equals(tfUsuario.getText())
+							&& login.getSenha().equals(String.copyValueOf(tfSenha.getPassword()))) {
+						frame.setVisible(false);
+
+						MainView window;
+
+						window = new MainView(login);
+						window.frame.setVisible(true);
+
+					} else {
+						JOptionPane.showMessageDialog(null, "Login ou senha incorreta!", "Erro no login",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Login ou senha incorreta!", "Erro no login",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+			}
+		});
 		btnCadastrar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				frame.setVisible(false);
 				CadastrarPaciente window;
 				try {
-					window = new CadastrarPaciente(0, pc);
+					
+					window = new CadastrarPaciente(0, null);
 					window.frame.setVisible(true);
 
 				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-			}
-		});
-
-		btnLogar.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (tfUsuario.getText().equals("") || tfSenha.getText().equals("")) {
-
-					JOptionPane.showInternalMessageDialog(null, "Há campos em branco!", "AVISO ",
-							JOptionPane.WARNING_MESSAGE);
-				} else {
-					lg = loginDao.findByLogin(tfUsuario.getText());
-					System.out.println(lg.getUsuario());
-					if (lg.getSenha() == null) {
-						JOptionPane.showInternalMessageDialog(null, "Usuário incorreto", "AVISO ",
-								JOptionPane.WARNING_MESSAGE);
-
-					} else if (!lg.getSenha().equals(tfSenha.getText())) {
-						JOptionPane.showInternalMessageDialog(null, "Senha incorreta", "AVISO ",
-								JOptionPane.WARNING_MESSAGE);
-					} else {
-						frame.setVisible(false);
-
-						DefaultView window;
-
-						window = new DefaultView(lg);
-						window.frame.setVisible(true);
-
-					}
+					JOptionPane.showMessageDialog(null, "formato da data incorreto!\n" + e1.getMessage(),
+							"Erro na data", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}

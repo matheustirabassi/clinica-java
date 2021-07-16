@@ -13,7 +13,7 @@ public interface LoginDao {
 
 	Login findById(Integer id);
 
-	Login findByLogin(String st);
+	Login findByLogin(String text);
 
 	List<Login> findAll();
 }

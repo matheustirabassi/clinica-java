@@ -10,6 +10,7 @@ import db.DB;
 import db.DbException;
 import model.dao.LoginDao;
 import model.entities.Login;
+import model.entities.Paciente;
 
 public class LoginDaoJDBC implements LoginDao {
 
@@ -44,22 +45,22 @@ public class LoginDaoJDBC implements LoginDao {
 	}
 
 	@Override
-	public Login findByLogin(String st) {
-		String sql = "select * from login where usuario = ?";
+	public Login findByLogin(String txt) {
+		String sql = "select login.*, paciente.* from login inner join paciente on paciente.id = login.idPaciente where usuario = ?";
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, st);
+			ps.setString(1, txt);
 			rs = ps.executeQuery();
-			Login login = new Login();
+			Login login = null;
+			Paciente paciente = null;
 			while (rs.next()) {
-
-				login.setId(rs.getInt("id"));
-				login.setUsuario(rs.getString("usuario"));
-				login.setSenha(rs.getString("senha"));
-				login.setIdPaciente(rs.getInt("idPaciente"));
+				login = new Login(rs.getInt("id"), rs.getString("usuario"), rs.getString("senha"));
+				paciente = new Paciente(rs.getInt("paciente.id"), rs.getString("nome"), rs.getString("cpf"),
+						rs.getString("telefone"), rs.getDate("dataNascimento"), rs.getString("email"), null, login);
+				login.setPaciente(paciente);
 
 			}
 			return login;

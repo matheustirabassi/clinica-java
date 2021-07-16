@@ -107,7 +107,7 @@ public class ConsultaTableModel extends AbstractTableModel {
 			valueObject = String.valueOf(consultaSelecionada.getTipoConsulta().getDescricao());
 			break;
 		case 3:
-			valueObject = " ";
+			valueObject = consultaSelecionada.getMedico().getNome();
 			break;
 		default:
 			System.err.println("Índice inválido");

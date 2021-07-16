@@ -5,20 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import db.DB;
 import db.DbException;
 import model.dao.ConsultaDao;
 import model.entities.Consulta;
-import model.entities.Endereco;
 import model.entities.Especialidade;
-import model.entities.Login;
 import model.entities.Medico;
 import model.entities.Paciente;
-import model.entities.Pagamento;
 
 public class ConsultaDaoJDBC implements ConsultaDao {
 
@@ -32,12 +27,6 @@ public class ConsultaDaoJDBC implements ConsultaDao {
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public Consulta findByIdPaciente(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -69,14 +58,8 @@ public class ConsultaDaoJDBC implements ConsultaDao {
 	}
 
 	@Override
-	public void update(Consulta obj, Paciente obj2, Medico obj3) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public List<Especialidade> findAllEspecialidade() {
-		String sql = "select * from especialidade";
+		String sql = "select * from especialidade order by especialidade.nomeEspecialidade asc";
 
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -110,6 +93,42 @@ public class ConsultaDaoJDBC implements ConsultaDao {
 		e.setDescricao(rs.getString("descricao"));
 
 		return e;
+	}
+
+	@Override
+	public void update(Consulta obj) {
+
+	}
+
+	@Override
+	public List<Consulta> findAllByIdPaciente(Integer id) {
+		String sql = "select consulta.*, medico.*, paciente.id from consulta inner join medico on medico.id = consulta.idMedico inner join paciente "
+				+ "where paciente.id = consulta.idPaciente and paciente.id = ? order by consulta.dataMarcada asc";
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(sql);
+			st.setInt(1, id);
+			rs = st.executeQuery();
+			List<Consulta> list = new ArrayList<>();
+			
+			while (rs.next()) {
+				Consulta consulta = new Consulta(rs.getInt("consulta.id"), rs.getTimestamp("consulta.dataMarcada"), rs.getString("observacao"), rs.getInt("tipoConsulta"), rs.getInt("statusConsulta"), null);
+				Medico medico = new Medico(rs.getInt("medico.id"), rs.getString("medico.nome"), rs.getString("medico.cpf"), rs.getString("medico.cpf"), rs.getString("medico.telefone"), null, null, null);
+				Paciente paciente = new Paciente(rs.getInt("paciente.id"), null, null, null, null, null, null);
+				consulta.setPaciente(paciente);
+				consulta.setMedico(medico);
+				medico.getConsultas().add(consulta);
+				list.add(consulta);
+			}
+			return list;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeResultSet(rs);
+			DB.closeStatement(st);
+		}
+		
 	}
 
 }

@@ -33,8 +33,8 @@ import model.entities.Enum.TipoConsulta;
 public class CadastrarConsulta {
 
 	public JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textFieldObservacoes;
+	private JTextField textDataHora;
 	private Medico objMedico;
 	ConsultaDao cDao = DaoFactory.createConsultaDao();
 
@@ -52,18 +52,19 @@ public class CadastrarConsulta {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(Paciente a) {
+	private void initialize(Paciente paciente) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 594, 427);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Agendar Consulta");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblNewLabel.setBounds(218, 11, 152, 60);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel lblAgendarConsulta = new JLabel("Agendar Consulta");
+		lblAgendarConsulta.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblAgendarConsulta.setBounds(218, 11, 152, 60);
+		frame.getContentPane().add(lblAgendarConsulta);
 
 		JRadioButton rdConsulta = new JRadioButton("Consulta");
+		rdConsulta.setSelected(true);
 		rdConsulta.setBounds(143, 78, 109, 23);
 		frame.getContentPane().add(rdConsulta);
 
@@ -75,34 +76,43 @@ public class CadastrarConsulta {
 		buttonGroup.add(rdExame);
 		buttonGroup.add(rdConsulta);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.setSelectedIndex(-1);
-		comboBox.setToolTipText("Selecione a especialidade");
-		comboBox.setBounds(92, 108, 160, 29);
-		frame.getContentPane().add(comboBox);
+		JComboBox<String> comboBoxEspecialidade = new JComboBox<String>();
+		comboBoxEspecialidade.setSelectedIndex(-1);
+		comboBoxEspecialidade.setToolTipText("Selecione a especialidade");
+		comboBoxEspecialidade.setBounds(92, 108, 160, 29);
+		frame.getContentPane().add(comboBoxEspecialidade);
 
 		List<Especialidade> listaEspecialidades = cDao.findAllEspecialidade();
 		for (Especialidade especial : listaEspecialidades) {
-			comboBox.addItem(especial.getNomeEspecialidade());
+			comboBoxEspecialidade.addItem(especial.getNomeEspecialidade());
 		}
+		comboBoxEspecialidade.setSelectedIndex(0);
 
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setSelectedIndex(-1);
-		comboBox_1.setToolTipText("Selecione o m\u00E9dico");
-		comboBox_1.setBounds(298, 108, 152, 29);
-		frame.getContentPane().add(comboBox_1);
+		JComboBox<String> comboBoxMedico = new JComboBox<String>();
+
+		comboBoxMedico.setToolTipText("Selecione o m\u00E9dico");
+		comboBoxMedico.setBounds(298, 108, 189, 29);
+		frame.getContentPane().add(comboBoxMedico);
 
 		MedicoDao medicoDao = DaoFactory.createMedicoDao();
+		List<Medico> listaMedicos = medicoDao.findAll();
+		comboBoxMedico.removeAllItems();
+		for (Medico medico : listaMedicos) {
+			if (comboBoxEspecialidade.getSelectedItem().toString()
+					.equals(medico.getEspecialidade().getNomeEspecialidade())) {
+				comboBoxMedico.addItem(medico.getNome());
+			}
+		}
 
-		comboBox.addActionListener(new ActionListener() {
+		comboBoxEspecialidade.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				List<Medico> listaMedicos = medicoDao.findAll();
-				comboBox_1.removeAllItems();
+				comboBoxMedico.removeAllItems();
 				for (Medico medico : listaMedicos) {
-					if (comboBox.getSelectedItem().toString()
+					if (comboBoxEspecialidade.getSelectedItem().toString()
 							.equals(medico.getEspecialidade().getNomeEspecialidade())) {
-						comboBox_1.addItem(medico.getNome());
+						comboBoxMedico.addItem(medico.getNome());
 					}
 
 				}
@@ -110,23 +120,23 @@ public class CadastrarConsulta {
 			}
 		});
 
-		textField = new JTextField();
-		textField.setBounds(243, 224, 206, 111);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		textFieldObservacoes = new JTextField();
+		textFieldObservacoes.setBounds(243, 224, 206, 111);
+		frame.getContentPane().add(textFieldObservacoes);
+		textFieldObservacoes.setColumns(10);
 
-		JLabel lblNewLabel_1 = new JLabel("Observa\u00E7\u00F5es:");
-		lblNewLabel_1.setBounds(92, 224, 141, 23);
-		frame.getContentPane().add(lblNewLabel_1);
+		JLabel lblObservacoes = new JLabel("Observa\u00E7\u00F5es:");
+		lblObservacoes.setBounds(92, 224, 141, 23);
+		frame.getContentPane().add(lblObservacoes);
 
-		JLabel lblNewLabel_2 = new JLabel("Data e hora:");
-		lblNewLabel_2.setBounds(92, 162, 102, 14);
-		frame.getContentPane().add(lblNewLabel_2);
+		JLabel lblDataHora = new JLabel("Data e hora:");
+		lblDataHora.setBounds(92, 162, 102, 14);
+		frame.getContentPane().add(lblDataHora);
 
-		textField_1 = new JTextField();
-		textField_1.setBounds(243, 159, 86, 20);
-		frame.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		textDataHora = new JTextField();
+		textDataHora.setBounds(243, 159, 86, 20);
+		frame.getContentPane().add(textDataHora);
+		textDataHora.setColumns(10);
 
 		Button btnSalvar = new Button("Salvar");
 		btnSalvar.setBounds(163, 354, 70, 22);
@@ -139,16 +149,17 @@ public class CadastrarConsulta {
 				try {
 
 					ConsultaDao consultaDao = DaoFactory.createConsultaDao();
-					Date dataAtual = sdf.parse(textField_1.getText());
-					String observacao = textField.getText();
+					
+					Date dataAtual = sdf.parse(textDataHora.getText());
+					String observacao = textFieldObservacoes.getText();
 					Consulta obj = new Consulta();
 					obj.setDataMarcada(dataAtual);
 					obj.setObservacao(observacao);
 					obj.setStatusConsulta(StatusConsulta.AGENDADO);
-					obj.setPaciente(a);
+					obj.setPaciente(paciente);
 					List<Medico> listaMedicos2 = medicoDao.findAll();
 					for (Medico medico : listaMedicos2) {
-						if (comboBox_1.getSelectedItem().toString().equals(medico.getNome())) {
+						if (comboBoxMedico.getSelectedItem().toString().equals(medico.getNome())) {
 							objMedico = medico;
 						}
 
@@ -164,7 +175,7 @@ public class CadastrarConsulta {
 					JOptionPane.showInternalMessageDialog(null, "Salvo/Alterado com Sucesso!");
 
 					frame.setVisible(false);
-					DefaultView window = new DefaultView(a.getLogin());
+					MainView window = new MainView(paciente.getLogin());
 					window.frame.setVisible(true);
 
 				} catch (ParseException e1) {
@@ -188,8 +199,9 @@ public class CadastrarConsulta {
 
 				if (escolha == 0) {
 					frame.setVisible(false);
-					Login lg = a.getLogin();
-					DefaultView window = new DefaultView(lg);
+					Login login = paciente.getLogin();
+					login.setPaciente(paciente);
+					MainView window = new MainView(login);
 					window.frame.setVisible(true);
 				}
 

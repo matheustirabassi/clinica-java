@@ -13,6 +13,7 @@ public class Main {
 				try {
 					LoginView window = new LoginView();
 					window.frame.setVisible(true);
+					window.frame.setTitle("Clinica");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

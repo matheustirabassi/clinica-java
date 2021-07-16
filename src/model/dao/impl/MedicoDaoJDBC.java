@@ -10,11 +10,8 @@ import java.util.List;
 import db.DB;
 import db.DbException;
 import model.dao.MedicoDao;
-import model.entities.Endereco;
 import model.entities.Especialidade;
-import model.entities.Login;
 import model.entities.Medico;
-import model.entities.Paciente;
 
 public class MedicoDaoJDBC implements MedicoDao {
 	private Connection conn;

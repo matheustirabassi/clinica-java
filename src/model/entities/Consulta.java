@@ -114,12 +114,15 @@ public class Consulta {
 		builder.append(tipoConsulta);
 		builder.append(", statusConsulta=");
 		builder.append(statusConsulta);
+		builder.append(",medico=");
+		builder.append(medico);
 		builder.append(", pagamento=");
 		builder.append(pagamento);
 		builder.append("]");
 		return builder.toString();
 	}
 
+	
 	public Medico getMedico() {
 		return medico;
 	}
