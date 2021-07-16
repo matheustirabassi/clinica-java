@@ -13,11 +13,13 @@ import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import model.dao.ConsultaDao;
 import model.dao.DaoFactory;
@@ -133,7 +135,12 @@ public class CadastrarConsulta {
 		lblDataHora.setBounds(92, 162, 102, 14);
 		frame.getContentPane().add(lblDataHora);
 
-		textDataHora = new JTextField();
+		try {
+			textDataHora = new JFormattedTextField(new MaskFormatter("##/##/#### ##:##"));
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		textDataHora.setBounds(243, 159, 86, 20);
 		frame.getContentPane().add(textDataHora);
 		textDataHora.setColumns(10);
