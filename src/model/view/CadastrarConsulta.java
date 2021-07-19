@@ -8,18 +8,19 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.text.MaskFormatter;
+
+import com.github.lgooddatepicker.components.DateTimePicker;
 
 import model.dao.ConsultaDao;
 import model.dao.DaoFactory;
@@ -36,7 +37,6 @@ public class CadastrarConsulta {
 
 	public JFrame frame;
 	private JTextField textFieldObservacoes;
-	private JTextField textDataHora;
 	private Medico objMedico;
 	ConsultaDao cDao = DaoFactory.createConsultaDao();
 
@@ -48,6 +48,7 @@ public class CadastrarConsulta {
 	 * Create the application.
 	 */
 	public CadastrarConsulta(Paciente obj) {
+		System.out.println("Abrindo tela de cadastrar consulta...");
 		initialize(obj);
 	}
 
@@ -134,16 +135,12 @@ public class CadastrarConsulta {
 		JLabel lblDataHora = new JLabel("Data e hora:");
 		lblDataHora.setBounds(92, 162, 102, 14);
 		frame.getContentPane().add(lblDataHora);
+		DateTimePicker dateTimePicker = new DateTimePicker();
 
-		try {
-			textDataHora = new JFormattedTextField(new MaskFormatter("##/##/#### ##:##"));
-		} catch (ParseException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		textDataHora.setBounds(243, 159, 86, 20);
-		frame.getContentPane().add(textDataHora);
-		textDataHora.setColumns(10);
+		dateTimePicker.setBounds(185, 158, 264, 23);
+		frame.getContentPane().add(dateTimePicker);
+		dateTimePicker.getDatePicker().setDate(LocalDate.now());
+		dateTimePicker.getTimePicker().setTime(LocalTime.now());
 
 		Button btnSalvar = new Button("Salvar");
 		btnSalvar.setBounds(163, 354, 70, 22);
@@ -152,45 +149,48 @@ public class CadastrarConsulta {
 		btnSalvar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+
+				ConsultaDao consultaDao = DaoFactory.createConsultaDao();
+
+				String observacao = textFieldObservacoes.getText();
+				Consulta obj = new Consulta();
+				System.out.println(dateTimePicker.getDatePicker().getDateStringOrEmptyString() + " "
+						+ dateTimePicker.getTimePicker().getTimeStringOrEmptyString());
 				try {
-
-					ConsultaDao consultaDao = DaoFactory.createConsultaDao();
-					
-					Date dataAtual = sdf.parse(textDataHora.getText());
-					String observacao = textFieldObservacoes.getText();
-					Consulta obj = new Consulta();
-					obj.setDataMarcada(dataAtual);
-					obj.setObservacao(observacao);
-					obj.setStatusConsulta(StatusConsulta.AGENDADO);
-					obj.setPaciente(paciente);
-					List<Medico> listaMedicos2 = medicoDao.findAll();
-					for (Medico medico : listaMedicos2) {
-						if (comboBoxMedico.getSelectedItem().toString().equals(medico.getNome())) {
-							objMedico = medico;
-						}
-
-					}
-					obj.setMedico(objMedico);
-					if (rdConsulta.isSelected()) {
-						obj.setTipoConsulta(TipoConsulta.CONVENCIONAL);
-					} else {
-						obj.setTipoConsulta(TipoConsulta.EXAME);
-					}
-
-					consultaDao.insert(obj);
-					JOptionPane.showInternalMessageDialog(null, "Salvo/Alterado com Sucesso!");
-
-					frame.setVisible(false);
-					MainView window = new MainView(paciente.getLogin());
-					window.frame.setVisible(true);
-
+					obj.setDataMarcada(sdf.parse(dateTimePicker.getDatePicker().getDateStringOrEmptyString() + " "
+							+ dateTimePicker.getTimePicker().getTimeStringOrEmptyString()));
 				} catch (ParseException e1) {
-					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error no formato da data",
-							JOptionPane.ERROR_MESSAGE);
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				obj.setObservacao(observacao);
+				obj.setStatusConsulta(StatusConsulta.AGENDADO);
+				obj.setPaciente(paciente);
+				List<Medico> listaMedicos2 = medicoDao.findAll();
+				for (Medico medico : listaMedicos2) {
+					if (comboBoxMedico.getSelectedItem().toString().equals(medico.getNome())) {
+						objMedico = medico;
+					}
+
+				}
+				obj.setMedico(objMedico);
+				if (rdConsulta.isSelected()) {
+					obj.setTipoConsulta(TipoConsulta.CONVENCIONAL);
+				} else {
+					obj.setTipoConsulta(TipoConsulta.EXAME);
 				}
 
+				consultaDao.insert(obj);
+				System.out.println("Salvo com sucesso!...");
+				JOptionPane.showInternalMessageDialog(null, "Salvo/Alterado com Sucesso!");
+
+				frame.setVisible(false);
+				MainView window = new MainView(paciente.getLogin());
+				window.frame.setVisible(true);
+
 			}
+
 		});
 
 		Button btnCancel = new Button("Cancelar");

@@ -244,7 +244,6 @@ public class PacienteDaoJDBC implements PacienteDao {
 		return obj;
 	}
 
-
 	private Login instantiateLogin(ResultSet rs) throws SQLException {
 		Login l = new Login();
 		l.setId(rs.getInt("login.id"));

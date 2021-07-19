@@ -111,10 +111,13 @@ public class ConsultaDaoJDBC implements ConsultaDao {
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			List<Consulta> list = new ArrayList<>();
-			
+
 			while (rs.next()) {
-				Consulta consulta = new Consulta(rs.getInt("consulta.id"), rs.getTimestamp("consulta.dataMarcada"), rs.getString("observacao"), rs.getInt("tipoConsulta"), rs.getInt("statusConsulta"), null);
-				Medico medico = new Medico(rs.getInt("medico.id"), rs.getString("medico.nome"), rs.getString("medico.cpf"), rs.getString("medico.cpf"), rs.getString("medico.telefone"), null, null, null);
+				Consulta consulta = new Consulta(rs.getInt("consulta.id"), rs.getTimestamp("consulta.dataMarcada"),
+						rs.getString("observacao"), rs.getInt("tipoConsulta"), rs.getInt("statusConsulta"), null);
+				Medico medico = new Medico(rs.getInt("medico.id"), rs.getString("medico.nome"),
+						rs.getString("medico.cpf"), rs.getString("medico.cpf"), rs.getString("medico.telefone"), null,
+						null, null);
 				Paciente paciente = new Paciente(rs.getInt("paciente.id"), null, null, null, null, null, null);
 				consulta.setPaciente(paciente);
 				consulta.setMedico(medico);
@@ -128,7 +131,7 @@ public class ConsultaDaoJDBC implements ConsultaDao {
 			DB.closeResultSet(rs);
 			DB.closeStatement(st);
 		}
-		
+
 	}
 
 }

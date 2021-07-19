@@ -20,7 +20,9 @@ public class Main {
 
 			}
 		});
+
 		DB.closeConnection();
+
 	}
 
 }

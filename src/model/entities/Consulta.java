@@ -122,7 +122,6 @@ public class Consulta {
 		return builder.toString();
 	}
 
-	
 	public Medico getMedico() {
 		return medico;
 	}

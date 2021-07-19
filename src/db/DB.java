@@ -29,6 +29,7 @@ public class DB {
 	public static void closeConnection() {
 		if (conn != null) {
 			try {
+				System.out.println("Finalizando conexão com o banco de dados...");
 				conn.close();
 			} catch (SQLException e) {
 				throw new DbException(e.getMessage());
@@ -60,6 +61,9 @@ public class DB {
 		try (FileInputStream fs = new FileInputStream("db.properties")) {
 			Properties props = new Properties();
 			props.load(fs);
+			System.out.println("Carregando informações do arquivo db.properties...");
+			System.out.println("dburl: " + props.getProperty("dburl"));
+			System.out.println("user: " + props.getProperty("user"));
 			return props;
 		} catch (IOException e) {
 			throw new DbException(e.getMessage());

@@ -124,6 +124,5 @@ public class Medico {
 		builder.append("]");
 		return builder.toString();
 	}
-	
 
 }

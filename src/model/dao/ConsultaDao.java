@@ -14,7 +14,7 @@ public interface ConsultaDao {
 	void deleteById(Integer id);
 
 	List<Consulta> findAllByIdPaciente(Integer id);
-	
+
 	List<Consulta> findAll();
 
 	List<Especialidade> findAllEspecialidade();

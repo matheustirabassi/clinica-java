@@ -95,7 +95,8 @@ public class ConsultaTableModel extends AbstractTableModel {
 	public Object getValueAt(int linha, int coluna) {
 		Consulta consultaSelecionada = lista.get(linha);
 		String valueObject = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
 		switch (coluna) {
 		case 0:
 			valueObject = sdf.format(consultaSelecionada.getDataMarcada()).toString();

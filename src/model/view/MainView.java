@@ -23,6 +23,7 @@ public class MainView {
 	 * Create the application.
 	 */
 	public MainView(Login obj) {
+		System.out.println("Abrindo tela principal...");
 		initialize(obj);
 	}
 
@@ -51,7 +52,8 @@ public class MainView {
 		btnAddConsulta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Paciente paciente = objLogin.getPaciente();
-				objLogin.setPaciente(paciente);;
+				objLogin.setPaciente(paciente);
+
 				frame.setVisible(false);
 				CadastrarConsulta window;
 				window = new CadastrarConsulta(paciente);
@@ -91,18 +93,19 @@ public class MainView {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("Entrando na tela de consultas...");
+				;
 				PacienteDao pacienteDao = DaoFactory.createPacienteDao();
 				Paciente paciente = pacienteDao.findById(objLogin.getPaciente().getId());
 
 				objLogin.setPaciente(paciente);
 				paciente.setLogin(objLogin);
-				
+
 				if (!objLogin.getPaciente().getConsultas().isEmpty()) {
 					frame.setVisible(false);
 					VisualizaConsultaView visualizaConsultaView = new VisualizaConsultaView(paciente);
 					visualizaConsultaView.frmConsultas.setVisible(true);
 				}
-				
 
 			}
 		});
@@ -110,9 +113,12 @@ public class MainView {
 		Button btnSair = new Button("Sair");
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("Saindo da tela principal...");
+
 				frame.setVisible(false);
 				try {
-
+					// DB.closeConnection();
+					;
 					LoginView window = new LoginView();
 					window.frame.setVisible(true);
 				} catch (Exception e2) {

@@ -27,10 +27,10 @@ public class VisualizaConsultaView {
 	 */
 	public VisualizaConsultaView(Paciente paciente) {
 		try {
-		initialize(paciente);
-		}catch (RuntimeException e) {
-			JOptionPane.showMessageDialog(null, "Você não tem consultas\n" + e.getMessage(), "Erro na busca de consultas",
-					JOptionPane.INFORMATION_MESSAGE);
+			initialize(paciente);
+		} catch (RuntimeException e) {
+			JOptionPane.showMessageDialog(null, "Você não tem consultas\n" + e.getMessage(),
+					"Erro na busca de consultas", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
@@ -38,14 +38,14 @@ public class VisualizaConsultaView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(Paciente paciente) {
-		
+
 		frmConsultas = new JFrame();
 		frmConsultas.setBounds(100, 100, 594, 427);
 		frmConsultas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmConsultas.getContentPane().setLayout(null);
-		
+
 		ConsultaDao consultaDao = DaoFactory.createConsultaDao();
-		List <Consulta> list = consultaDao.findAllByIdPaciente(paciente.getId());
+		List<Consulta> list = consultaDao.findAllByIdPaciente(paciente.getId());
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 0, 568, 357);
@@ -62,7 +62,7 @@ public class VisualizaConsultaView {
 		btnVoltar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				int escolha = JOptionPane.showConfirmDialog(null, "Gostaria de voltar ao menu principal?", "Cancelar",
 						JOptionPane.YES_NO_OPTION);
 				if (escolha == 0) {
@@ -74,7 +74,6 @@ public class VisualizaConsultaView {
 		});
 
 		frmConsultas.getContentPane().add(btnVoltar);
-		
 
 	}
 }

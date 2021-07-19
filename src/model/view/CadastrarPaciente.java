@@ -4,15 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.text.MaskFormatter;
+
+import com.github.lgooddatepicker.components.DatePicker;
 
 import model.dao.DaoFactory;
 import model.dao.PacienteDao;
@@ -33,7 +34,6 @@ public class CadastrarPaciente {
 	private JTextField tfEstado;
 	private JTextField tfCidade;
 	private JTextField tfCep;
-	JFormattedTextField tfDtNasci = new JFormattedTextField(new MaskFormatter("##/##/####"));
 	private JTextField tfComplemento;
 	private JTextField tfUsuario;
 	private JPasswordField tfSenha;
@@ -99,16 +99,16 @@ public class CadastrarPaciente {
 		tfEmail.setColumns(10);
 
 		JLabel lblDataDeNascimento = new JLabel("Data de Nascimento:");
-		lblDataDeNascimento.setBounds(22, 128, 167, 14);
+		lblDataDeNascimento.setBounds(22, 128, 125, 14);
 		frame.getContentPane().add(lblDataDeNascimento);
-
-		tfDtNasci.setBounds(174, 126, 86, 20);
-		frame.getContentPane().add(tfDtNasci);
-		tfDtNasci.setColumns(10);
 
 		JLabel lblTxtInformacoesPessoais = new JLabel("Informa\u00E7\u00F5es Pessoais");
 		lblTxtInformacoesPessoais.setBounds(22, 5, 225, 14);
 		frame.getContentPane().add(lblTxtInformacoesPessoais);
+
+		DatePicker datePicker = new DatePicker();
+		datePicker.setBounds(157, 126, 185, 20);
+		frame.getContentPane().add(datePicker);
 
 		JLabel lblTxtEndereco = new JLabel("Endere\u00E7o");
 		lblTxtEndereco.setBounds(22, 171, 78, 14);
@@ -213,7 +213,7 @@ public class CadastrarPaciente {
 						|| tfSenha.getPassword().toString().equals("") || tfSenha2.getPassword().toString().equals("")
 						|| tfLogradouro.getText().equals("") || tfNumero.getText().equals("")
 						|| tfCep.getText().equals("") || tfCidade.getText().equals("") || tfEstado.getText().equals("")
-						|| tfDtNasci.getText().equals("")) {
+						|| datePicker.getDateStringOrEmptyString().equals("")) {
 
 					JOptionPane.showInternalMessageDialog(null, "Há campos em branco!", "AVISO ",
 							JOptionPane.WARNING_MESSAGE);
@@ -225,11 +225,11 @@ public class CadastrarPaciente {
 							JOptionPane.WARNING_MESSAGE);
 				} else if (opcao == 0) {
 
-					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 					try {
 						Paciente paciente = new Paciente(null, tfNome.getText(), tfCpf.getText(), tfTelefone.getText(),
-								sdf.parse(tfDtNasci.getText()), tfEmail.getText(),
+								sdf.parse(datePicker.getDateStringOrEmptyString()), tfEmail.getText(),
 								new Endereco(tfLogradouro.getText(), Integer.parseInt(tfNumero.getText()),
 										Integer.parseInt(tfCep.getText()), tfEstado.getText(), tfCidade.getText(),
 										tfBairro.getText(), tfComplemento.getText()),
@@ -247,14 +247,14 @@ public class CadastrarPaciente {
 					}
 
 				} else if (opcao == 1) {
-					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 					objPaciente.setNome(tfNome.getText());
 					objPaciente.setCpf(tfCpf.getText());
 					objPaciente.setTelefone(tfTelefone.getText());
 					objPaciente.setEmail(tfEmail.getText());
 					try {
-						objPaciente.setDataNascimento(sdf.parse(tfDtNasci.getText()));
+						objPaciente.setDataNascimento(sdf.parse(datePicker.getDateStringOrEmptyString()));
 					} catch (ParseException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -287,13 +287,16 @@ public class CadastrarPaciente {
 
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				int escolha = JOptionPane.showConfirmDialog(null, "Gostaria de cancelar?", "Cancelar",
 						JOptionPane.YES_NO_OPTION);
 				if (escolha == 0 && opcao == 0) {
+					System.out.println("Cancelado!!!");
 					LoginView window = new LoginView();
 					frame.setVisible(false);
 					window.frame.setVisible(true);
-				} else if (escolha == 0 && opcao == 1){
+				} else if (escolha == 0 && opcao == 1) {
+					System.out.println("Cancelado!!!");
 					MainView window = new MainView(objPaciente.getLogin());
 					frame.setVisible(false);
 					window.frame.setVisible(true);
@@ -313,14 +316,15 @@ public class CadastrarPaciente {
 		if (opcao == 1)
 
 		{
-			SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
+			System.out.println("Carregando informações do paciente...");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 			tfNome.setText(objPaciente.getNome());
 			tfTelefone.setText(objPaciente.getTelefone());
 			tfEmail.setText(objPaciente.getNome());
 			tfCpf.setText(objPaciente.getCpf());
 			tfEmail.setText(objPaciente.getEmail());
-			tfDtNasci.setText(sdf.format(objPaciente.getDataNascimento()));
+			datePicker.setDate(LocalDate.parse(sdf.format(objPaciente.getDataNascimento())));
 			tfLogradouro.setText(objPaciente.getEndereco().getLogradouro());
 			tfNumero.setText(objPaciente.getEndereco().getNumero().toString());
 			tfBairro.setText(objPaciente.getEndereco().getBairro());

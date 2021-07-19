@@ -26,6 +26,7 @@ public class LoginView {
 	 * Create the application.
 	 */
 	public LoginView() {
+		System.out.println("Abrindo login...");
 		initialize();
 
 	}
@@ -90,6 +91,7 @@ public class LoginView {
 
 						window = new MainView(login);
 						window.frame.setVisible(true);
+						System.out.println("Bem vindo(a) " + login.getPaciente().getNome());
 
 					} else {
 						JOptionPane.showMessageDialog(null, "Login ou senha incorreta!", "Erro no login",
@@ -105,10 +107,11 @@ public class LoginView {
 		btnCadastrar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				System.out.println("Abrindo tela de cadastro...");
 				frame.setVisible(false);
 				CadastrarPaciente window;
 				try {
-					
+
 					window = new CadastrarPaciente(0, null);
 					window.frame.setVisible(true);
 
